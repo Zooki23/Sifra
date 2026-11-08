@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#192f38">
+<title>Memorija · Naša igraonica</title>
+<style>
+:root{color-scheme:light;--ink:#192f38;--muted:#52676b;--paper:#f6f4ee;--lime:#e5edcf}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button,select,input{font:inherit}button,a,select,input{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #547638;outline-offset:4px}[hidden]{display:none!important}.wrap{width:min(100% - 36px,850px);margin:auto}header{border-bottom:1px solid #192f3820;padding:19px 0}.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}.back{color:var(--ink);text-decoration:none;font-weight:700;font-size:14px}.brand{font-weight:750;font-size:13px;color:var(--muted)}main{padding:32px 0}h1{font-size:clamp(36px,7vw,54px);letter-spacing:-1.7px;line-height:1.1;margin:10px 0}h1 span{color:#557b41}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:800;color:var(--muted);margin:0}.lead{color:var(--muted);font-size:15px;line-height:1.65;margin:12px 0 24px}.panel{background:white;border:1px solid #192f3818;border-radius:23px;padding:25px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:17px}label{display:block;font-size:13px;font-weight:700}select,input{display:block;width:100%;padding:13px 10px;border:1px solid #192f382d;border-radius:11px;background:#fbfaf7;color:var(--ink);margin-top:7px;min-height:47px}fieldset{border:0;padding:0;margin:20px 0 0}legend{font-weight:700;font-size:13px;margin-bottom:4px}.names{display:grid;grid-template-columns:1fr 1fr;gap:12px}.names label{color:var(--muted);font-weight:500}.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}.primary,.secondary{border:0;border-radius:12px;padding:13px 20px;font-weight:750;min-height:46px}.primary{background:var(--ink);color:white}.primary:hover{background:#2c4d57}.secondary{background:#e9e9e0;color:var(--ink)}.hint{font-size:12px;line-height:1.6;color:var(--muted);margin:18px 0 0}.rules{margin-top:20px;color:var(--muted);font-size:14px;line-height:1.7}.rules summary{cursor:pointer;font-weight:700;color:var(--ink)}.rules ol{padding-left:22px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 18px}.toolbar button{padding:10px 14px;font-size:13px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:15px}.stat{background:white;border:1px solid #192f3814;border-radius:15px;padding:13px 10px;text-align:center}.stat strong{display:block;font-size:23px;letter-spacing:-.5px}.stat span{font-size:11px;color:var(--muted)}.scores{display:grid;grid-template-columns:repeat(var(--players),1fr);gap:8px;margin-bottom:14px}.player{border:2px solid transparent;background:#e9e9e0;border-radius:13px;padding:11px 8px;text-align:center;min-width:0}.player.current{border-color:var(--ink);background:var(--lime)}.player .name{display:block;font-size:12px;overflow-wrap:anywhere}.player b{display:block;font-size:23px}.status{font-weight:650;font-size:14px;min-height:42px;line-height:1.5;margin:4px 0 12px}.board{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:10px;max-width:680px;margin:auto}.card{position:relative;aspect-ratio:1;border:2px solid transparent;border-radius:16px;background:var(--ink);color:#dfe9bc;box-shadow:0 3px 0 #0c202a20;font-size:clamp(25px,6vw,48px);padding:0;display:grid;place-items:center;transition:background .16s,transform .16s;touch-action:manipulation}.card:hover:not(:disabled){transform:translateY(-2px)}.card .symbol{display:none}.card .cover{font-size:clamp(25px,5vw,39px);font-weight:750}.card.open{background:#fff;border-color:#b3c58e}.card.open .symbol{display:block}.card.open .cover{display:none}.card.matched{background:var(--lime);border-color:#a2ba77;box-shadow:none;color:var(--ink)}.card.matched:after{content:'✓';position:absolute;right:5px;bottom:1px;font-size:13px;color:#3c602a}.result{background:var(--lime);border:1px solid #a2ba77;border-radius:20px;padding:23px;margin-top:22px}.result h2{font-size:26px;letter-spacing:-.7px;margin:0 0 10px}.result p{line-height:1.6;margin:8px 0;white-space:pre-line}.record{font-size:13px;color:var(--muted);margin-top:16px;line-height:1.6}footer{color:var(--muted);font-size:12px;text-align:center;padding:12px 0 28px}.session{font-size:12px;color:var(--muted)}
+@media(max-width:480px){.wrap{width:calc(100% - 28px)}main{padding-top:26px}.panel{padding:20px}.fields{grid-template-columns:1fr}.names{grid-template-columns:1fr 1fr}.board{gap:7px}.card{border-radius:12px}.board.large{--cols:4!important}.brand{font-size:11px}.player{padding:8px 4px}.status{font-size:13px}.toolbar{align-items:flex-start}.session{max-width:170px}.stat strong{font-size:21px}.card.matched:after{font-size:11px;right:3px;bottom:0}}
+@media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover:not(:disabled){transform:none}}
+
+.online-error{background:#f8dfd4;border:1px solid #d39a82;color:#733d26;border-radius:12px;padding:13px 16px;font-size:14px;line-height:1.6;margin:0 0 18px}.online-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.online-grid .primary,.online-grid .secondary{width:100%;margin-top:12px}.online-divider{border-top:1px solid #192f3820;margin-top:20px;padding-top:18px}.room-panel{margin:0 0 20px}.room-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}.room-heading h2{margin:0;font-size:20px}.room-code{font-size:clamp(24px,5vw,35px);font-weight:850;letter-spacing:.12em;overflow-wrap:anywhere;margin:10px 0}.room-code span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}.connected{color:#3f692c;font-size:12px;font-weight:700}.disconnected{color:#9b5428;font-size:12px;font-weight:700}.room-actions{display:flex;flex-wrap:wrap;gap:9px}.room-actions button{font-size:12px;padding:10px 14px}.lobby-list{padding-left:22px;line-height:1.9;font-size:14px}.lobby-count{font-size:13px;color:var(--muted);margin-top:20px}.room-panel .hint{margin-bottom:0}.primary:disabled,.secondary:disabled{opacity:.5;cursor:default}.result{margin-top:20px}.invite-field{margin-top:14px}.invite-field input{font-size:12px}.online-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:750;color:#557b41;margin-top:20px}.online-help{font-size:13px;line-height:1.7;color:var(--muted)}
+@media(max-width:480px){.online-grid{grid-template-columns:1fr}.room-heading{align-items:flex-start}.room-panel{padding:18px}.room-code{letter-spacing:.07em}}
+</style>
+</head>
+<body>
+<header><nav class="wrap nav" aria-label="Navigacija"><a class="back" href="index.html">← Izbor igara</a><span class="brand">✦ Naša igraonica</span></nav></header>
+<main class="wrap">
+<p class="eyebrow">Gledaj. Zapamti. Poveži.</p><h1>Igra <span>memorije.</span></h1>
+<p class="lead">Pronađite parove na zajedničkoj tabli. Za 2–4 igrača, svako na svom telefonu.</p>
+<p class="online-error" id="onlineError" role="alert" hidden></p>
+<section class="panel setup" id="setup" aria-label="Povezivanje igrača">
+<label for="myName">Tvoje ime<input id="myName" maxlength="20" placeholder="Upiši ime" autocomplete="nickname"></label>
+<p class="online-label">Napravi sobu</p>
+<div class="fields"><label for="roomLimit">Najviše igrača<select id="roomLimit"><option value="2">2 igrača</option><option value="3">3 igrača</option><option value="4" selected>4 igrača</option></select></label><label for="difficulty">Težina<select id="difficulty"><option value="6">Lako · 6 parova</option><option value="8" selected>Srednje · 8 parova</option><option value="12">Teško · 12 parova</option><option value="18">Izazov · 18 parova</option></select></label><label for="theme">Sličice<select id="theme"><option value="animals">Životinje</option><option value="food">Voće i hrana</option><option value="travel">Putovanje i zabava</option></select></label></div>
+<div class="actions"><button class="primary" id="createRoom" data-network-action type="button">Napravi sobu →</button></div>
+<div class="online-divider"><label for="roomCode">Ili se pridruži kodom sobe<input id="roomCode" maxlength="12" placeholder="Npr. AB23CD45" autocapitalize="characters" autocomplete="off" spellcheck="false"></label><p class="small" id="joinHint">Kod ili pozivni link dobićeš od igrača koji je napravio sobu.</p><button class="secondary" id="joinRoom" data-network-action type="button">Pridruži se</button></div>
+<p class="online-help">Svako igra na svom telefonu. Potreban je internet. Možete biti na različitim mrežama i na različitim mestima.</p>
+</section>
+<section class="panel room-panel" id="roomPanel" hidden aria-label="Zajednička soba"><div class="room-heading"><h2 id="roomTitle">Čekamo igrače</h2><span id="connection" class="disconnected">○ Povezivanje…</span></div><p class="room-code"><span>Kod sobe</span><b id="roomCodeShow"></b></p><div class="room-actions"><button class="primary" id="shareRoom" type="button">Podeli pozivni link ↗</button><button class="secondary" id="leaveRoom" type="button">Napusti sobu</button></div><p class="small" id="shareFeedback" role="status"></p><label class="invite-field" id="inviteField" hidden>Pozivni link<input readonly id="inviteLink"></label><div id="lobby"><p class="lobby-count" id="lobbyCount"></p><ul class="lobby-list" id="roomPlayers"></ul><p class="online-help" id="lobbyHint"></p><button class="primary" id="hostStart" type="button">Pokreni zajedničku partiju →</button></div><div class="actions"><button class="secondary" id="rematch" type="button" hidden>Nova partija u istoj sobi</button><p class="small" id="waitingRematch" hidden>Domaćin može da pokrene novu partiju u istoj sobi.</p></div></section>
+<section id="game" aria-label="Partija memorije" hidden>
+<div class="toolbar"><span class="session" id="session"></span><span class="session">Online · ista tabla za sve</span></div>
+<div class="stats"><div class="stat"><strong id="moves">0</strong><span>Potezi</span></div><div class="stat"><strong id="pairs">0 / 8</strong><span>Pronađeni parovi</span></div><div class="stat"><strong id="time">00:00</strong><span>Vreme</span></div></div>
+<div class="scores" id="scores" hidden></div>
+<p class="status" id="status" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="board" id="board" aria-label="Kartice za uparivanje"></div>
+<p class="record" id="record">Pronađen par donosi poen i još jedan potez. Posle promašaja red prelazi na sledećeg igrača.</p>
+<section class="result" id="result" aria-labelledby="resultTitle" hidden><h2 id="resultTitle" tabindex="-1">Svi parovi su pronađeni!</h2><p id="resultText"></p></section>
+</section>
+<details class="rules"><summary>Kako se igra?</summary><p>Domaćin pravi sobu i šalje pozivni link ili kod. Svako ulazi sa svog telefona. Kada se pridruže najmanje dva igrača, domaćin pokreće partiju. Igrač na redu otvara dve kartice. Svi vide iste otvorene kartice. Pronađen par donosi poen i dodatni potez. Različite kartice ostaju kratko otvorene za pamćenje, zatim se zatvaraju i red prelazi na sledećeg igrača. Pobeđuje igrač sa najviše parova. Ako zatvoriš stranicu, vrati se istim pregledačem i istim linkom.</p></details></main><footer>Mali izazov za dobro pamćenje.</footer>
+<script>
+'use strict';
+const THEMES={
+ animals:[['🐶','pas'],['🐱','mačka'],['🦊','lisica'],['🐻','medved'],['🐼','panda'],['🦁','lav'],['🐯','tigar'],['🐸','žaba'],['🐵','majmun'],['🐷','prase'],['🐮','krava'],['🐰','zec'],['🦋','leptir'],['🐢','kornjača'],['🐬','delfin'],['🦉','sova'],['🐙','hobotnica'],['🦒','žirafa']],
+ food:[['🍎','jabuka'],['🍐','kruška'],['🍊','pomorandža'],['🍋','limun'],['🍌','banana'],['🍉','lubenica'],['🍇','grožđe'],['🍓','jagoda'],['🍒','trešnje'],['🍍','ananas'],['🥝','kivi'],['🥑','avokado'],['🥕','šargarepa'],['🌽','kukuruz'],['🍕','pica'],['🍩','krofna'],['🍪','keks'],['🍰','torta']],
+ travel:[['🚗','automobil'],['🚌','autobus'],['🚲','bicikl'],['✈️','avion'],['🚀','raketa'],['🚂','lokomotiva'],['⛵','jedrilica'],['🚁','helikopter'],['🏰','zamak'],['⛺','šator'],['⚽','fudbalska lopta'],['🏀','košarkaška lopta'],['🎸','gitara'],['🎺','truba'],['🎨','paleta'],['🎲','kockica'],['🧸','meda'],['🎁','poklon']]
+};
+
+/* Shared room transport; embedded in each standalone game. */
+class RoomClient {
+ constructor(kind,id,onChange,onConnection){this.kind=kind;this.id=id;this.onChange=onChange;this.onConnection=onConnection;this.room=null;this.code='';this.online=false;this.busy=false;this.timer=null;this.closed=false;this.reading=false;}
+ endpoint(code){return 'https://sifra-62129-default-rtdb.firebaseio.com/games/igraonica_v2_'+this.kind+'_'+code+'.json';}
+ async request(code,options={}){
+  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);
+  try{const res=await fetch(this.endpoint(code),{...options,cache:'no-store',signal:controller.signal});return res;}finally{clearTimeout(timer);}
+ }
+ async read(code){const res=await this.request(code,{headers:{'X-Firebase-ETag':'true'}});if(!res.ok)throw new Error(res.status===401||res.status===403?'Baza trenutno ne dozvoljava povezivanje.':'Veza sa sobom nije dostupna. Pokušaj ponovo.');return {data:await res.json(),etag:res.headers.get('ETag')};}
+ valid(r){return r&&r.v===2&&r.kind===this.kind&&Array.isArray(r.players)&&r.players.length>=1&&r.players.length<=4&&Number.isInteger(r.rev)&&typeof r.game==='string';}
+ accept(r){if(!this.valid(r))throw new Error('Soba ne postoji ili koristi drugu verziju igre.');if(this.room&&this.code===r.code&&this.room.rev>r.rev)return;this.room=r;this.online=true;this.onConnection(true);this.onChange(r);}
+ async create(name,limit,options){
+  const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  for(let attempt=0;attempt<5;attempt++){
+   const bytes=crypto.getRandomValues(new Uint8Array(8));const code=Array.from(bytes,n=>alphabet[n%alphabet.length]).join('');const {data,etag}=await this.read(code);if(data!==null)continue;
+   const r={v:2,kind:this.kind,code,rev:0,host:this.id,players:[{id:this.id,name}],limit,options,stage:'lobby',game:'null',created:Date.now()};
+   const res=await this.request(code,{method:'PUT',headers:{'Content-Type':'application/json','If-Match':etag},body:JSON.stringify(r)});
+   if(res.status===412)continue;if(!res.ok)throw new Error('Soba nije napravljena. Proveri vezu i pokušaj ponovo.');this.code=code;this.room=null;this.accept(await res.json());this.watch();return;
+  }throw new Error('Nije uspelo pravljenje sobe. Pokušaj ponovo.');
+ }
+ async join(code,name){
+  this.code=code;this.room=null;
+  await this.transaction(r=>{if(r.players.some(p=>p.id===this.id))return r;if(r.stage!=='lobby')throw new Error('Partija je već počela. Možeš ući samo sa telefona sa kog si se ranije pridružio/la.');if(r.players.length>=r.limit)throw new Error('Soba je puna.');r.players.push({id:this.id,name});return r;},null);
+  this.watch();
+ }
+ async restore(code){const {data}=await this.read(code);if(!this.valid(data)||!data.players.some(p=>p.id===this.id))return false;this.code=code;this.room=null;this.accept(data);this.watch();return true;}
+ async transaction(change,expectedRev){
+  const code=this.code;if(!code)throw new Error('Prvo se pridruži sobi.');
+  for(let attempt=0;attempt<6;attempt++){
+   const {data,etag}=await this.read(code);if(!this.valid(data))throw new Error('Soba više nije dostupna.');
+   if(expectedRev!==null&&data.rev!==expectedRev){this.accept(data);throw new Error('Partija je osvežena. Proveri stanje i ponovi potez.');}
+   const next=change(JSON.parse(JSON.stringify(data)));if(!next)return false;next.rev=data.rev+1;
+   const res=await this.request(code,{method:'PUT',headers:{'Content-Type':'application/json','If-Match':etag},body:JSON.stringify(next)});
+   if(res.status===412)continue;if(!res.ok)throw new Error('Potez nije sačuvan. Proveri vezu pa pokušaj ponovo.');this.accept(await res.json());return true;
+  }throw new Error('Više poteza je stiglo istovremeno. Osveži stanje i pokušaj ponovo.');
+ }
+ async poll(){if(this.closed||this.reading||!this.code)return;this.reading=true;try{const code=this.code;const {data}=await this.read(code);if(code!==this.code||this.closed)return;if(!data){this.online=false;this.onConnection(false,'Soba više nije dostupna.');return;}if(!this.room||data.rev!==this.room.rev||!this.online)this.accept(data);}catch{this.online=false;this.onConnection(false,'Veza je prekinuta. Povezivanje se automatski ponavlja…');}finally{this.reading=false;}}
+ watch(){this.closed=false;clearInterval(this.timer);this.timer=setInterval(()=>this.poll(),900);}
+ stop(){this.closed=true;clearInterval(this.timer);this.timer=null;}
+}
+const OEl=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
+const SafeStore={get(key){try{return localStorage.getItem(key)||'';}catch{return '';}},set(key,value){try{localStorage.setItem(key,value);}catch{}}};
+let roomClient=null,room=null,netBusy=false,networkReady=false;
+let myId=SafeStore.get('igraonica.online.pid');if(!myId){myId=Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join('');SafeStore.set('igraonica.online.pid',myId);}
+function isMyTurn(){return !!(room&&room.stage==='playing'&&room.players[state.turn]?.id===myId&&networkReady&&!netBusy);}
+function netMessage(text){$('onlineError').textContent=text;$('onlineError').hidden=!text;}
+function applyRoom(r){room=r;SafeStore.set('igraonica.online.'+GAME_KIND+'.room',r.code);$('setup').hidden=true;$('roomPanel').hidden=false;$('roomCodeShow').textContent=r.code;$('lobby').hidden=r.stage!=='lobby';$('game').hidden=r.stage==='lobby';$('roomTitle').textContent=r.stage==='lobby'?'Čekamo igrače':r.stage==='finished'?'Završena partija':'Zajednička partija';$('roomPlayers').replaceChildren();r.players.forEach((p,i)=>{const li=OEl('li',p.name+(p.id===myId?' (ti)':'')+(p.id===r.host?' · domaćin':''));$('roomPlayers').append(li);});$('lobbyCount').textContent=r.players.length+' / '+r.limit+' igrača';$('hostStart').hidden=r.host!==myId;$('hostStart').disabled=r.players.length<2||netBusy||!networkReady;$('lobbyHint').textContent=r.host===myId?'Podeli link ili kod. Kada se pridruže najmanje dva igrača, pokreni partiju.':'Čekaj da domaćin pokrene partiju. Ostavi ovu stranicu otvorenu.';
+ if(r.stage!=='lobby'){state=JSON.parse(r.game);onGameState();}else onLobby();
+ $('rematch').hidden=r.stage!=='finished'||r.host!==myId;$('waitingRematch').hidden=r.stage!=='finished'||r.host===myId;
+}
+function connection(online,message){networkReady=online;$('connection').textContent=online?'● Povezano':'○ Povezivanje…';$('connection').className=online?'connected':'disconnected';if(message)netMessage(message);else if(online&&!netBusy)netMessage('');if(room){$('hostStart').disabled=room.players.length<2||netBusy||!online;if(room.stage!=='lobby')onGameState();}}
+async function netTask(action){if(netBusy)return;netBusy=true;netMessage('');document.querySelectorAll('[data-network-action]').forEach(b=>b.disabled=true);if(room&&room.stage!=='lobby')onGameState();try{await action();}catch(e){netMessage(e.name==='AbortError'?'Veza traje predugo. Proveri internet i pokušaj ponovo.':e.message||'Povezivanje nije uspelo.');}finally{netBusy=false;$('createRoom').disabled=false;$('joinRoom').disabled=false;if(room)applyRoom(room);}}
+function actionGame(change){if(!isMyTurn())return;const rev=room.rev;return netTask(()=>roomClient.transaction(r=>{if(r.stage!=='playing'||r.players[JSON.parse(r.game).turn]?.id!==myId)throw new Error('Sada je drugi igrač na redu.');const s=JSON.parse(r.game);change(s,r);r.game=JSON.stringify(s);if(s.over)r.stage='finished';return r;},rev));}
+function inviteLink(){const url=new URL(location.href);url.search='';url.hash='';url.searchParams.set('soba',room.code);return url.href;}
+async function shareRoom(){const url=inviteLink();try{if(navigator.share){await navigator.share({title:GAME_TITLE+' · zajednička soba',text:'Pridruži se igri '+GAME_TITLE+'. Kod sobe: '+room.code,url});return;}if(navigator.clipboard){await navigator.clipboard.writeText(url);$('shareFeedback').textContent='Link je kopiran. Pošalji ga drugim igračima.';return;}}catch(e){if(e.name==='AbortError')return;}$('inviteLink').value=url;$('inviteField').hidden=false;$('inviteLink').focus();$('inviteLink').select();$('shareFeedback').textContent='Kopiraj ovaj link i pošalji ga drugim igračima.';}
+function createRoom(){const name=$('myName').value.trim();if(!name){netMessage('Upiši svoje ime.');$('myName').focus();return;}SafeStore.set('igraonica.online.name',name);return netTask(()=>roomClient.create(name,Number($('roomLimit').value),readOptions()));}
+function joinRoom(){const name=$('myName').value.trim(),code=$('roomCode').value.trim().toUpperCase().replace(/\s/g,'');if(!name){netMessage('Upiši svoje ime.');$('myName').focus();return;}if(!/^[A-HJ-NP-Z2-9]{8}$/.test(code)){netMessage('Kod sobe ima 8 znakova. Proveri ga ili otvori pozivni link.');return;}SafeStore.set('igraonica.online.name',name);return netTask(()=>roomClient.join(code,name));}
+function startRoom(){if(!room||room.host!==myId)return;return netTask(()=>roomClient.transaction(r=>{if(r.host!==myId||r.stage!=='lobby'||r.players.length<2)throw new Error('Potrebna su najmanje dva igrača.');r.game=JSON.stringify(makeOnlineGame(r));r.stage='playing';return r;},room.rev));}
+async function exitRoom(){if(!room)return;if(!window.confirm(room.stage==='playing'?'Napusti prikaz partije? Tvoje mesto ostaje sačuvano. Vrati se istim telefonom preko istog linka.':'Napusti ovu sobu?'))return;const current=room;if(current.stage==='lobby'&&current.players.length>1){let left=false;await netTask(async()=>{await roomClient.transaction(r=>{if(r.stage!=='lobby')throw new Error('Partija je upravo počela. Pokušaj ponovo.');r.players=r.players.filter(p=>p.id!==myId);if(r.host===myId)r.host=r.players[0].id;return r;},null);left=true;});if(!left)return;}
+ roomClient.stop();onLobby();room=null;state=null;roomClient.room=null;roomClient.code='';SafeStore.set('igraonica.online.'+GAME_KIND+'.room','');$('roomPanel').hidden=true;$('game').hidden=true;$('setup').hidden=false;$('roomCode').value=current.code;history.replaceState(null,'',location.pathname);netMessage('');}
+function rematchRoom(){if(!room||room.host!==myId)return;netTask(()=>roomClient.transaction(r=>{if(r.host!==myId||r.stage!=='finished')throw new Error('Partija još nije završena.');r.stage='lobby';r.game='null';return r;},room.rev));}
+async function bootOnline(){
+ roomClient=new RoomClient(GAME_KIND,myId,applyRoom,connection);$('myName').value=SafeStore.get('igraonica.online.name');$('createRoom').addEventListener('click',createRoom);$('joinRoom').addEventListener('click',joinRoom);$('hostStart').addEventListener('click',startRoom);$('shareRoom').addEventListener('click',shareRoom);$('leaveRoom').addEventListener('click',exitRoom);$('rematch').addEventListener('click',rematchRoom);$('roomCode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();joinRoom();}});
+ const urlCode=new URLSearchParams(location.search).get('soba');const code=(urlCode||SafeStore.get('igraonica.online.'+GAME_KIND+'.room')).toUpperCase();if(/^[A-HJ-NP-Z2-9]{8}$/.test(code)){$('roomCode').value=code;await netTask(async()=>{const restored=await roomClient.restore(code);if(!restored){$('joinHint').textContent='Poziv za sobu '+code+'. Upiši svoje ime i pritisni „Pridruži se“. ';}});}
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)roomClient.poll();});window.addEventListener('online',()=>roomClient.poll());
+}
+
+const GAME_KIND='memory',GAME_TITLE='Memorija';
+const $=id=>document.getElementById(id);
+let state=null,mismatchTimer=null,mismatchStamp='',boardStamp='',clock=null;
+function shuffled(items){const a=items.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function formatTime(ms){const n=Math.max(0,Math.floor(ms/1000));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
+function readOptions(){return {total:Number($('difficulty').value),theme:$('theme').value};}
+function makeOnlineGame(r){const total=r.options.total,theme=r.options.theme;const symbols=shuffled(THEMES[theme]).slice(0,total);return {count:r.players.length,total,theme,names:r.players.map(p=>p.name),scores:r.players.map(()=>0),turn:0,found:0,moves:0,open:[],matched:Array(total*2).fill(false),deck:shuffled(symbols.flatMap((item,key)=>[{key,symbol:item[0],name:item[1]},{key,symbol:item[0],name:item[1]}])),waiting:false,over:false,startTime:Date.now(),finishedAt:null};}
+function onLobby(){clearTimeout(mismatchTimer);clearInterval(clock);mismatchTimer=null;clock=null;mismatchStamp='';boardStamp='';}
+function memoryFlip(s,index){
+ if(s.over||s.waiting||!Number.isInteger(index)||index<0||index>=s.deck.length||s.matched[index]||s.open.includes(index))throw new Error('Ova kartica trenutno nije dostupna.');
+ s.open.push(index);if(s.open.length<2)return;
+ s.moves++;const [a,b]=s.open;
+ if(s.deck[a].key===s.deck[b].key){s.matched[a]=true;s.matched[b]=true;s.scores[s.turn]++;s.found++;s.open=[];if(s.found===s.total){s.over=true;s.finishedAt=Date.now();}}
+ else s.waiting=true;
+}
+function flip(index){if(!isMyTurn()||state.waiting||state.matched[index]||state.open.includes(index))return;return actionGame(s=>memoryFlip(s,index));}
+async function settleMismatch(stamp){
+ if(!room||room.stage!=='playing'||!state.waiting||stamp!==mismatchStamp)return;
+ if(netBusy||!networkReady){mismatchTimer=setTimeout(()=>settleMismatch(stamp),800);return;}
+ const revision=room.rev;
+ try{await roomClient.transaction(r=>{const s=JSON.parse(r.game);if(r.stage!=='playing'||!s.waiting)return null;s.waiting=false;s.open=[];s.turn=(s.turn+1)%s.count;r.game=JSON.stringify(s);return r;},revision);}catch{if(room&&state?.waiting&&stamp===mismatchStamp)mismatchTimer=setTimeout(()=>settleMismatch(stamp),1000);}
+}
+function tickClock(){if(!state)return;const end=state.over?state.finishedAt:Date.now();$('time').textContent=formatTime(end-state.startTime);}
+function onGameState(){
+ if(!state)return;
+ $('moves').textContent=state.moves;$('pairs').textContent=state.found+' / '+state.total;
+ const labels={animals:'Životinje',food:'Voće i hrana',travel:'Putovanje i zabava'};$('session').textContent=state.total+' parova · '+labels[state.theme];
+ $('scores').replaceChildren();$('scores').hidden=false;$('scores').style.setProperty('--players',state.count);
+ state.names.forEach((name,i)=>{const box=OEl('div',undefined,'player'+(i===state.turn&&!state.over?' current':''));box.append(OEl('span',name+(room.players[i].id===myId?' (ti)':'')+(i===state.turn&&!state.over?' · na redu':''),'name'),OEl('b',String(state.scores[i])));$('scores').append(box);});
+ const key=room.code+':'+state.startTime;
+ if(boardStamp!==key){boardStamp=key;$('board').replaceChildren();$('board').className='board'+(state.total>=12?' large':'');$('board').style.setProperty('--cols',state.total>=12?6:4);state.deck.forEach((card,index)=>{const b=OEl('button',undefined,'card');b.type='button';const front=OEl('span',card.symbol,'symbol');front.setAttribute('aria-hidden','true');const back=OEl('span','✦','cover');back.setAttribute('aria-hidden','true');b.append(front,back);b.addEventListener('click',()=>flip(index));$('board').append(b);});}
+ Array.from($('board').children).forEach((b,i)=>{const visible=state.matched[i]||state.open.includes(i);b.className='card'+(visible?' open':'')+(state.matched[i]?' matched':'');b.disabled=!isMyTurn()||state.waiting||state.matched[i]||state.open.includes(i);b.setAttribute('aria-pressed',String(visible));b.setAttribute('aria-label','Kartica '+(i+1)+': '+(visible?state.deck[i].name+(state.matched[i]?', pronađen par':''):'zatvorena'));});
+ $('status').textContent=state.over?'Partija je završena!':!networkReady?'Veza je prekinuta. Sačekaj ponovno povezivanje.':state.waiting?'Nisu par. Svi zapamtite ove dve kartice!':room.players[state.turn].id===myId?(state.open.length?'Tvoj red: otvori drugu karticu.':'Tvoj red: pronađi par!'):'Na redu je '+state.names[state.turn]+'. Prati kartice na svom telefonu.';
+ if(state.waiting){const stamp=room.code+':'+room.rev;if(mismatchStamp!==stamp){clearTimeout(mismatchTimer);mismatchStamp=stamp;mismatchTimer=setTimeout(()=>settleMismatch(stamp),2200);}}else{clearTimeout(mismatchTimer);mismatchTimer=null;mismatchStamp='';}
+ tickClock();if(!clock&&!state.over)clock=setInterval(tickClock,500);if(state.over){clearInterval(clock);clock=null;}
+ $('result').hidden=!state.over;
+ if(state.over){const max=Math.max(...state.scores),winners=state.names.filter((_,i)=>state.scores[i]===max);$('resultText').textContent=(winners.length===1?'Pobednik: '+winners[0]+'!':'Podeljena pobeda: '+winners.join(', ')+'.')+'\n'+state.names.map((name,i)=>name+': '+state.scores[i]+' parova').join(' · ')+'\nPotezi: '+state.moves+' · Vreme: '+formatTime(state.finishedAt-state.startTime)+'.';}
+}
+bootOnline();
+
+</script>
+</body>
+</html>
