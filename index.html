@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#192f38">
+  <meta name="description" content="Porodična igraonica: asocijacije, geografija, vešala, šifra, memorija i jamb. Izaberi igru i počni!">
+  <title>Naša igraonica</title>
+  <style>
+    :root{color-scheme:light;--ink:#192f38;--muted:#53666b;--paper:#f6f4ee}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+    .wrap{max-width:1080px;margin:auto;padding:0 28px}header{padding:25px 0;border-bottom:1px solid #192f3820}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.6px;font-size:21px}.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--ink);color:#e0ee9b;font-size:25px}.tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    main{padding-top:52px;padding-bottom:30px}.intro{position:relative;padding-right:150px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}h1{font-size:clamp(38px,6.5vw,65px);line-height:1.06;letter-spacing:-2.7px;margin:0 0 18px;font-weight:850}h1 span{color:#557b41}.lead{font-size:17px;line-height:1.65;color:var(--muted);margin:0;max-width:550px}.decoration{position:absolute;right:13px;top:13px;display:grid;grid-template-columns:repeat(2,48px);gap:9px;transform:rotate(11deg)}.decoration i{height:48px;border-radius:15px;background:#dde7bd}.decoration i:nth-child(2){background:#f1d2ad;border-radius:50%}.decoration i:nth-child(3){background:#c7dce1;border-radius:50%}.decoration i:nth-child(4){background:#d9d1eb}
+    .section-label{display:flex;align-items:center;gap:12px;margin:38px 0 17px;font-size:12px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.section-label:after{content:"";height:1px;flex:1;background:#192f3820}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .game{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);padding:26px;border:1px solid #192f3815;border-radius:23px;background:var(--tint);min-height:245px;transition:transform .18s,box-shadow .18s}.game:hover{transform:translateY(-4px);box-shadow:0 12px 30px #192f3810}.game:focus-visible{outline:3px solid var(--ink);outline-offset:5px}.game:active{transform:translateY(0)}
+    .card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.icon{display:grid;place-items:center;width:53px;height:53px;background:#ffffff85;border-radius:16px;font-size:27px}.category{font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.game h2{font-size:27px;letter-spacing:-.8px;margin:0 0 8px}.game p{color:#42585d;line-height:1.55;font-size:14px;margin:0 0 24px;max-width:330px}.play{display:flex;align-items:center;justify-content:space-between;margin-top:auto;font-weight:750;font-size:14px}.arrow{display:grid;place-items:center;width:34px;height:34px;border:1px solid #192f3830;border-radius:50%;font-size:20px}.game:hover .arrow{background:var(--ink);color:white}
+    .a{--tint:#e5edcf}.b{--tint:#d9e9ed}.c{--tint:#f3dfc9}.d{--tint:#e6dff1}.e{--tint:#f1e7bf}.f{--tint:#d8e8d7}footer{display:flex;justify-content:space-between;gap:16px;padding:24px 0 30px;border-top:1px solid #192f3820;color:var(--muted);font-size:12px;line-height:1.6;margin-top:30px}footer strong{color:var(--ink);font-weight:650}
+    @media(min-width:800px){main{padding-top:60px}.game{min-height:260px;padding:29px}.game h2{font-size:30px}}
+    @media(max-width:560px){.wrap{padding:0 20px}header{padding:18px 0}.tag{font-size:10px;max-width:95px;text-align:right}.brand{font-size:19px}.intro{padding-right:0}.decoration{display:none}h1{letter-spacing:-1.7px}.lead{font-size:16px}.grid{grid-template-columns:1fr;gap:14px}.game{min-height:224px;padding:23px}.card-top{margin-bottom:15px}.game p{max-width:none}.section-label{margin-top:30px}footer{flex-direction:column;gap:4px}}
+    @media(prefers-reduced-motion:reduce){.game{transition:none}.game:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap top"><div class="brand"><span class="mark" aria-hidden="true">✦</span>Naša igraonica</div><span class="tag">Malo igre. Mnogo razmišljanja.</span></div></header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="heading">
+      <p class="eyebrow">Vreme je za novu rundu</p>
+      <h1 id="heading">Biraj igru.<br><span>Pokreni vijuge.</span></h1>
+      <p class="lead">Šest igara za dobru zabavu. Izaberi svoj izazov i neka nadmetanje počne!</p>
+      <div class="decoration" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </section>
+    <div class="section-label">Izaberi svoju igru <span>06</span></div>
+    <nav class="grid" aria-label="Izbor igre">
+      <a class="game a" href="asocijacije.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🧩</span><span class="category">Online · 2–4 igrača</span></div>
+        <h2>Asocijacije</h2><p>100 tabli, četiri kolone i jedno konačno rešenje. Svako igra sa svog telefona.</p>
+        <span class="play">Igraj asocijacije <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="game b" href="geografija.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🌍</span><span class="category">Istraži svet</span></div>
+        <h2>Geografija</h2><p>Priseti se onoga što znaš o svetu i pokaži svoje znanje.</p>
+        <span class="play">Igraj geografiju <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="game c" href="vesala.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🔤</span><span class="category">Slovo po slovo</span></div>
+        <h2>Vešala</h2><p>Pogodi skrivenu reč. Dobro razmisli pre nego što izabereš slovo!</p>
+        <span class="play">Igraj vešala <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="game d" href="index2.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🔐</span><span class="category">Razmišljaj logično</span></div>
+        <h2>Šifra</h2><p>Prati tragove, isprobaj kombinacije i otkrij tajnu šifru.</p>
+        <span class="play">Igraj šifru <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="game e" href="memorija.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🎴</span><span class="category">Online · 2–4 igrača</span></div>
+        <h2>Memorija</h2><p>Pronađite parove na zajedničkoj tabli. Za 2–4 igrača, svako na svom telefonu.</p>
+        <span class="play">Igraj memoriju <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="game f" href="yamb.html">
+        <div class="card-top"><span class="icon" aria-hidden="true">🎲</span><span class="category">Online · 2–4 igrača</span></div>
+        <h2>Jamb</h2><p>Pet kockica, četiri kolone i 2–4 igrača, svako na svom telefonu. Pridruži se sobi i zaigraj!</p>
+        <span class="play">Igraj jamb <span class="arrow" aria-hidden="true">↗</span></span>
+      </a>
+    </nav>
+    <footer><strong>Dobra zabava počinje dobrom igrom.</strong><span>Za povratak na izbor igara koristi dugme Nazad u pregledaču.</span></footer>
+  </main>
+</body>
+</html>
