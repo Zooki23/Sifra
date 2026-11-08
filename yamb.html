@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#192f38">
+<title>Jamb · Naša igraonica</title>
+<style>
+:root{color-scheme:light;--ink:#192f38;--muted:#52676b;--paper:#f6f4ee;--lime:#e5edcf}*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{cursor:default}a,button,input,select{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #557b41;outline-offset:3px}.wrap{width:min(100% - 32px,1040px);margin:auto}header{border-bottom:1px solid #192f3820;padding:19px 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px}.nav a{color:var(--ink);text-decoration:none;font-weight:750;font-size:14px}.brand{color:var(--muted);font-size:12px;font-weight:700}main{padding:30px 0}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800;color:var(--muted);margin:0}h1{font-size:clamp(42px,7vw,60px);margin:6px 0 12px;letter-spacing:-2px;line-height:1.1}h1 span{color:#557b41}.lead{color:var(--muted);font-size:15px;line-height:1.6;margin:0 0 25px}.panel{background:white;padding:24px;border:1px solid #192f3818;border-radius:22px}.setup{max-width:620px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-size:13px;font-weight:700;display:block}input,select{width:100%;display:block;margin-top:7px;padding:12px;border:1px solid #192f382d;border-radius:11px;min-height:47px;background:#fbfaf7;color:var(--ink)}.names{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}.primary,.secondary{min-height:44px;border:0;border-radius:11px;padding:12px 18px;font-weight:750}.primary{background:var(--ink);color:#fff}.primary:hover:not(:disabled){background:#2d505a}.primary:disabled{opacity:.5}.secondary{background:#e8e9df;color:var(--ink)}.small{font-size:12px;color:var(--muted);line-height:1.6}.save-note{margin:16px 0 0}.resume{padding:15px;background:var(--lime);border-radius:14px;margin-bottom:20px}.resume p{margin:0;font-size:14px;line-height:1.5}.resume .actions{margin-top:10px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}.toolbar .secondary{font-size:12px;padding:9px 12px}.round{font-size:13px;color:var(--muted)}.leaderboard{display:grid;grid-template-columns:repeat(var(--players),minmax(0,1fr));gap:9px;margin-bottom:20px}.player{border:2px solid transparent;background:#e9e9df;color:var(--ink);border-radius:14px;padding:10px 6px;text-align:center;min-width:0}.player.active{border-color:#192f38;background:var(--lime)}.player.viewed{box-shadow:0 0 0 2px #557b4140}.player .name{display:block;font-size:12px;overflow-wrap:anywhere}.player strong{display:block;font-size:24px;margin:2px 0}.player .turn{display:block;font-size:10px;min-height:15px}.layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(400px,1.2fr);gap:20px;align-items:start}.play-panel{position:sticky;top:16px}.turn-title{font-size:23px;letter-spacing:-.6px;margin:0 0 5px;overflow-wrap:anywhere}.roll-count{font-size:13px;color:var(--muted);margin:0 0 20px}.dice{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.die{position:relative;aspect-ratio:.83;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:2px solid #bfc9bc;border-radius:12px;background:#fcfcf9;color:var(--ink);padding:8px 3px}.die.held{background:var(--lime);border-color:#557b41;box-shadow:0 3px 0 #557b4120}.die .pip{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;width:100%;max-width:40px;aspect-ratio:1}.dot{border-radius:50%;background:var(--ink);opacity:0}.dot.on{opacity:1}.die .hold-label{font-size:9px;letter-spacing:-.1px}.die:disabled{opacity:.65}.roll-button{width:100%;margin-top:17px}.hint{font-size:12px;color:var(--muted);line-height:1.6;margin:13px 0}.status{background:#eff2e6;border-radius:12px;padding:13px;font-size:14px;line-height:1.6;margin:16px 0 0;min-height:70px}.status.announced{background:#e6dff1}.table-panel{padding:0;overflow:hidden}.sheet-head{padding:18px 16px 12px}.sheet-head h2{font-size:19px;margin:0 0 5px;overflow-wrap:anywhere}.sheet-head p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}th,td{border:1px solid #192f3818;text-align:center;padding:0;height:42px}th:first-child{width:30%;text-align:left;padding-left:12px}thead th{background:#edf0e5;height:48px;font-size:12px}thead th small{display:block;font-size:9px;font-weight:500;margin-top:3px}tbody th{font-weight:600;font-size:12px;background:#fcfcf8}.cell{display:block;width:100%;height:100%;min-height:42px;border:0;background:transparent;color:#344b50;font-weight:750;font-size:15px}.cell:disabled{color:#6f7b7d;font-weight:500}.cell.possible{background:#e5edcf;color:#29481b}.cell.possible:hover{background:#ccdda4}.cell.zero{background:#f4e6d9;color:#86502a}.cell.announce{background:#e6dff1;color:#543c70;font-size:10px}.cell.target{background:#d9caed;box-shadow:inset 0 0 0 2px #745293}.cell.filled{color:var(--ink);font-weight:750;background:#f3f3ed}.sum th,.sum td{height:33px;background:#eef0e6;font-size:11px;font-weight:700}.grand th,.grand td{height:42px;background:var(--ink);color:white;font-weight:750;font-size:13px}.break-top th,.break-top td{border-top:2px solid #acb8ac}.legend{padding:12px 16px;font-size:11px;line-height:1.7;color:var(--muted);margin:0}.result{background:var(--lime);border:1px solid #a2ba77;border-radius:20px;padding:23px;margin-bottom:20px}.result h2{font-size:27px;margin:0 0 9px}.result p{line-height:1.7;white-space:pre-line;margin:0}.rules{margin-top:24px;background:#ffffff9c;border-radius:18px;padding:20px;font-size:13px;line-height:1.7;color:var(--muted)}.rules summary{font-weight:750;color:var(--ink);cursor:pointer}.rules h3{font-size:14px;color:var(--ink);margin:17px 0 8px}.rules ul{padding-left:20px}.rules p{margin:9px 0}.rules a{color:var(--ink)}.rule-table{table-layout:auto;background:white;font-size:12px}.rule-table th:first-child{width:30%}.rule-table td{text-align:left;padding:8px}.rule-table th{padding:8px;font-size:12px}dialog{border:1px solid #192f3820;border-radius:20px;padding:25px;color:var(--ink);max-width:420px;width:calc(100% - 36px);background:var(--paper)}dialog::backdrop{background:#192f3875}dialog h2{margin:0 0 10px;font-size:23px}dialog p{line-height:1.7;white-space:pre-line}footer{text-align:center;font-size:12px;color:var(--muted);padding:0 16px 25px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.play-panel{position:static}.dice{gap:10px;max-width:430px;margin:auto}.die{aspect-ratio:1}.die .pip{max-width:35px}.die .hold-label{font-size:10px}.panel{padding:20px}.table-panel{padding:0}.leaderboard{gap:6px}.player strong{font-size:21px}.player .name{font-size:11px}.brand{font-size:11px}.status{min-height:0}th:first-child{width:28%}}
+@media(max-width:380px){.wrap{width:calc(100% - 24px)}.fields,.names{grid-template-columns:1fr}.dice{gap:5px}.die{padding:7px 3px;border-radius:9px}.die .hold-label{font-size:8px}.die .pip{gap:2px}thead th{font-size:11px}.sheet-head{padding:15px 12px}}
+</style>
+</head>
+<body>
+<header><nav class="wrap nav" aria-label="Navigacija"><a href="index.html">← Izbor igara</a><span class="brand">✦ Naša igraonica</span></nav></header>
+<main class="wrap"><p class="eyebrow">Pet kockica. Dobra taktika.</p><h1>Porodični <span>jamb.</span></h1><p class="lead">Za 1–4 igrača na istom uređaju. Baci kockice, sačuvaj najbolje i mudro izaberi polje.</p>
+<section id="setup" class="panel setup" aria-label="Podešavanje partije">
+<div class="resume" id="resumeBox" hidden><p id="resumeText"></p><div class="actions"><button class="primary" id="resume" type="button">Nastavi partiju →</button></div></div>
+<form id="settings"><div class="fields"><label for="players">Broj igrača<select id="players"><option value="1">1 igrač</option><option value="2" selected>2 igrača</option><option value="3">3 igrača</option><option value="4">4 igrača</option></select></label></div><div class="names" id="names"></div><div class="actions"><button type="submit" class="primary">Započni novu partiju →</button></div></form>
+<p class="small">5 kockica · do 3 bacanja · 4 kolone · 52 poteza po igraču. Pravila i bodovanje su navedeni ispod.</p>
+</section>
+<section id="game" hidden aria-label="Partija jamba">
+<div class="toolbar"><span class="round" id="round"></span><button class="secondary" id="newGame" type="button">Nova partija</button></div>
+<div class="result" id="result" hidden><h2 tabindex="-1" id="resultTitle">Partija je završena!</h2><p id="resultText"></p><div class="actions"><button class="primary" id="playAgain" type="button">Igraj ponovo</button></div></div>
+<div class="leaderboard" id="leaderboard" aria-label="Rezultati igrača"></div>
+<div class="layout">
+<section class="panel play-panel" aria-label="Kockice i bacanje"><h2 class="turn-title" id="turnTitle"></h2><p class="roll-count" id="rollCount"></p><div class="dice" id="dice" aria-label="Pet kockica"></div><button class="primary roll-button" type="button" id="roll">Baci kockice 🎲</button><p class="hint">Dodirni kockicu da je zadržiš ili ponovo oslobodiš. Zelene kockice se ne bacaju ponovo.</p><p class="status" id="status" role="status" aria-live="polite" aria-atomic="true"></p><p class="small save-note" id="saveNote"></p></section>
+<section class="panel table-panel" aria-label="Tabela rezultata"><div class="sheet-head"><h2 id="sheetTitle"></h2><p id="sheetHint"></p></div><div class="table-scroll"><table aria-label="Jamb tabela"><thead><tr><th scope="col">Polje</th><th scope="col">↓<small>Naniže</small></th><th scope="col">↑<small>Naviše</small></th><th scope="col">↕<small>Slobodna</small></th><th scope="col">N<small>Najava</small></th></tr></thead><tbody id="sheet"></tbody></table></div><p class="legend">Zeleno: moguć upis · Narandžasto: 0 poena · Ljubičasto: najava. Brojevi u praznim poljima su predlog; upis potvrđuješ posebnim dugmetom.</p></section>
+</div></section>
+<details class="rules"><summary>Pravila i bodovanje ove igre</summary><h3>Tok poteza</h3><p>Svaki igrač ima najviše tri bacanja pet kockica. Posle prvog bacanja možeš da zadržiš bilo koje kockice. Možeš da upišeš rezultat već posle prvog ili drugog bacanja. Jedan upis završava potez i red prelazi na sledećeg igrača. Ako nemaš potrebnu kombinaciju, izaberi dozvoljeno prazno polje i upiši 0.</p><h3>Četiri kolone</h3><ul><li><strong>Naniže ↓:</strong> redom od jedinica do jamba.</li><li><strong>Naviše ↑:</strong> redom od jamba do jedinica.</li><li><strong>Slobodna ↕:</strong> bilo koje prazno polje.</li><li><strong>Najava N:</strong> odmah posle prvog bacanja izaberi i potvrdi jedno prazno polje u ovoj koloni. Preostala bacanja koristiš samo za taj cilj. Najava je obavezna za taj potez i ne može se promeniti. Ako kombinacija izostane, upisuješ 0 u najavljeno polje.</li></ul><h3>Poeni</h3><table class="rule-table"><tbody><tr><th scope="row">1–6</th><td>Zbir kockica sa izabranim brojem. Zbir prvih šest redova od najmanje 60 donosi bonus 30 u toj koloni.</td></tr><tr><th scope="row">Maks. / Min.</th><td>Zbir svih pet kockica. Srednji deo kolone = (Maks. − Min.) × poeni u jedinicama te kolone. Razlika može biti negativna.</td></tr><tr><th scope="row">Triling</th><td>Tri iste: zbir tri kockice + 20. Važi i kada imaš četiri ili pet istih.</td></tr><tr><th scope="row">Kenta</th><td>1–2–3–4–5 ili 2–3–4–5–6: 66 iz prvog, 56 iz drugog ili 46 iz trećeg bacanja.</td></tr><tr><th scope="row">Ful</th><td>Tri iste i dve druge iste: zbir svih kockica + 30. Pet istih ne računa se kao ful.</td></tr><tr><th scope="row">Poker</th><td>Četiri iste: zbir četiri kockice + 40. Pet istih takođe može da se upiše kao poker.</td></tr><tr><th scope="row">Jamb</th><td>Pet istih: zbir svih kockica + 50.</td></tr></tbody></table><p>Ukupan rezultat je zbir sva četiri stupca. Partija završava kada svi popune sva polja. U slučaju istog broja poena pobeda se deli. Međurezultati za deo Maks./Min. računaju se kada su upisana i ta dva polja i jedinice.</p><p>Partija se čuva samo u ovom pregledaču, kada je čuvanje dozvoljeno. Drugi igrači na drugim telefonima imaju zasebne partije.</p></details>
+</main><footer>Sreća u kockicama, taktika u tabeli.</footer>
+<dialog id="confirmDialog" aria-labelledby="confirmTitle"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="actions"><button type="button" class="primary" id="confirmYes">Potvrdi</button><button type="button" class="secondary" id="confirmNo">Odustani</button></div></dialog>
+<script>
+'use strict';
+const ROWS=['Jedinice','Dvojke','Trojke','Četvorke','Petice','Šestice','Maksimum','Minimum','Triling','Kenta','Ful','Poker','Jamb'];
+const COLS=['Naniže','Naviše','Slobodna','Najava'];
+const SAVE_KEY='igraonica.jamb.v1';
+const $=id=>document.getElementById(id);
+let state=null,view=0,saved=null,confirmAction=null;
+const enteredNames=['Igrač 1','Igrač 2','Igrač 3','Igrač 4'];
+function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function blankSheet(){return Array.from({length:4},()=>Array(13).fill(null));}
+function score(row,dice,rolls){
+ const counts=Array(7).fill(0);dice.forEach(x=>counts[x]++);const sum=dice.reduce((a,b)=>a+b,0);
+ if(row<6)return counts[row+1]*(row+1);
+ if(row===6||row===7)return sum;
+ const same=n=>{for(let value=6;value>=1;value--)if(counts[value]>=n)return value*n;return null;};
+ if(row===8){const n=same(3);return n===null?0:n+20;}
+ if(row===9){const unique=[...new Set(dice)].sort().join('');return unique==='12345'||unique==='23456'?76-rolls*10:0;}
+ if(row===10)return counts.includes(3)&&counts.includes(2)?sum+30:0;
+ if(row===11){const n=same(4);return n===null?0:n+40;}
+ if(row===12){const n=same(5);return n===null?0:n+50;}
+ return 0;
+}
+function columnTotals(col){const upper=col.slice(0,6).reduce((a,b)=>a+(b??0),0),bonus=upper>=60?30:0;const middle=[col[0],col[6],col[7]].every(x=>x!==null)?(col[6]-col[7])*col[0]:0;const lower=col.slice(8).reduce((a,b)=>a+(b??0),0);return {upper,bonus,middle,lower,total:upper+bonus+middle+lower};}
+function total(sheet){return sheet.reduce((sum,col)=>sum+columnTotals(col).total,0);}
+function filledCount(sheet){return sheet.flat().filter(v=>v!==null).length;}
+function canUse(row,col){
+ if(!state||state.over||state.rolls===0||state.sheets[state.turn][col][row]!==null)return false;
+ if(state.announced!==null)return col===3&&row===state.announced;
+ if(col===3)return state.rolls===1;
+ const sheet=state.sheets[state.turn];
+ if(col===0)return row===sheet[0].findIndex(x=>x===null);
+ if(col===1){for(let r=12;r>=0;r--)if(sheet[1][r]===null)return r===row;return false;}
+ return col===2;
+}
+function validateSaved(s){
+ if(!s||s.version!==1||!Array.isArray(s.names)||s.names.length<1||s.names.length>4||!s.names.every(n=>typeof n==='string'&&n.length>0&&n.length<=20))return false;
+ const count=s.names.length;
+ if(!Number.isInteger(s.turn)||s.turn<0||s.turn>=count||!Number.isInteger(s.rolls)||s.rolls<0||s.rolls>3||typeof s.over!=='boolean')return false;
+ if(!Array.isArray(s.dice)||s.dice.length!==5||!s.dice.every(x=>Number.isInteger(x)&&x>=1&&x<=6)||!Array.isArray(s.held)||s.held.length!==5||!s.held.every(x=>typeof x==='boolean'))return false;
+ if(!Array.isArray(s.sheets)||s.sheets.length!==count||!s.sheets.every(sh=>Array.isArray(sh)&&sh.length===4&&sh.every(col=>Array.isArray(col)&&col.length===13&&col.every(v=>v===null||(Number.isInteger(v)&&v>=0&&v<=80)))))return false;
+ if(s.announced!==null&&(!Number.isInteger(s.announced)||s.announced<0||s.announced>12||s.rolls===0||s.sheets[s.turn][3][s.announced]!==null))return false;
+ const counts=s.sheets.map(filledCount),sum=counts.reduce((a,b)=>a+b,0);
+ if(s.over)return counts.every(x=>x===52)&&s.announced===null;
+ const round=Math.floor(sum/count),turn=sum%count;
+ return s.turn===turn&&counts.every((v,i)=>v===round+(i<turn?1:0))&&round<52;
+}
+function readSaved(){try{const s=JSON.parse(localStorage.getItem(SAVE_KEY));return validateSaved(s)?s:null;}catch{return null;}}
+function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));$('saveNote').textContent='✓ Partija je sačuvana u ovom pregledaču.';saved=state;return true;}catch{$('saveNote').textContent='Čuvanje nije dostupno u ovom pregledaču. Ne zatvaraj stranicu dok igraš.';return false;}}
+function updateNames(){document.querySelectorAll('#names input').forEach((input,i)=>enteredNames[i]=input.value);$('names').replaceChildren();for(let i=0;i<Number($('players').value);i++){const label=el('label','Ime igrača '+(i+1));const input=el('input');input.id='name'+i;input.maxLength=20;input.value=enteredNames[i];input.autocomplete='off';label.append(input);$('names').append(label);}}
+function ask(title,text,button,action){confirmAction=action;$('confirmTitle').textContent=title;$('confirmText').textContent=text;$('confirmYes').textContent=button;$('confirmDialog').showModal();$('confirmNo').focus();}
+function start(){const names=Array.from({length:Number($('players').value)},(_,i)=>($('name'+i).value.trim()||'Igrač '+(i+1)));names.forEach((n,i)=>enteredNames[i]=n);state={version:1,names,sheets:names.map(blankSheet),turn:0,rolls:0,dice:[1,1,1,1,1],held:[false,false,false,false,false],announced:null,over:false};view=0;$('setup').hidden=true;$('game').hidden=false;save();render();$('roll').focus();}
+function requestStart(){if(saved&&!saved.over){ask('Nova partija?','Sačuvana partija biće zamenjena novom.','Započni novu',start);}else start();}
+function dieValue(){return 1+Math.floor(Math.random()*6);}
+function roll(){if(!state||state.over||state.rolls>=3||state.held.every(Boolean))return;for(let i=0;i<5;i++)if(!state.held[i])state.dice[i]=dieValue();state.rolls++;view=state.turn;save();render();}
+function toggleHold(i){if(!state||state.over||state.rolls===0||state.rolls===3)return;state.held[i]=!state.held[i];save();renderDice();renderRollButton();}
+function choose(row,col){
+ if(view!==state.turn||!canUse(row,col))return;
+ if(col===3&&state.announced===null){ask('Najava: '+ROWS[row],'Obavezuješ se da u ovom potezu upišeš '+ROWS[row].toLowerCase()+'. Cilj ne možeš promeniti. Ako ne dobiješ kombinaciju, upisuje se 0.','Najavi polje',()=>{if(state.rolls!==1||state.announced!==null||!canUse(row,col))return;state.announced=row;save();render();$('roll').focus();});return;}
+ const value=score(row,state.dice,state.rolls);
+ ask('Upis: '+ROWS[row],state.names[state.turn]+' · '+COLS[col]+'\n'+(value===0?'Precrtavanje: upisuješ 0 poena.':'Upisuješ '+value+' poena.')+'\nOvim završavaš potez.','Upiši '+value,()=>commit(row,col));
+}
+function commit(row,col){
+ if(!canUse(row,col)||(col===3&&state.announced===null))return;
+ state.sheets[state.turn][col][row]=score(row,state.dice,state.rolls);
+ state.announced=null;state.held.fill(false);state.rolls=0;
+ state.over=state.sheets.every(sh=>filledCount(sh)===52);
+ if(!state.over)state.turn=(state.turn+1)%state.names.length;
+ view=state.turn;save();render();
+ if(state.over)$('resultTitle').focus();else $('roll').focus();
+}
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+function renderDice(){
+ $('dice').replaceChildren();state.dice.forEach((value,i)=>{const b=el('button',undefined,'die'+(state.held[i]?' held':''));b.type='button';b.disabled=state.over||state.rolls===0||state.rolls===3;b.setAttribute('aria-pressed',String(state.held[i]));b.setAttribute('aria-label','Kockica '+(i+1)+': '+(state.rolls?value:'još nije bačena')+(state.held[i]?', zadržana':', slobodna'));const pip=el('span',undefined,'pip');pip.setAttribute('aria-hidden','true');for(let j=0;j<9;j++)pip.append(el('i',undefined,'dot'+(state.rolls&&PIPS[value].includes(j)?' on':'')));if(!state.rolls){pip.append(el('span'));}const caption=el('span',state.rolls?(state.held[i]?'Zadržana':'Slobodna'):'—','hold-label');caption.setAttribute('aria-hidden','true');b.append(pip,caption);b.addEventListener('click',()=>toggleHold(i));$('dice').append(b);});
+}
+function renderRollButton(){const allHeld=state.held.every(Boolean);$('roll').disabled=state.over||state.rolls>=3||allHeld;$('roll').textContent=state.over?'Partija je završena':state.rolls>=3?'Upiši rezultat u tabelu':allHeld?'Oslobodi kockicu ili upiši rezultat':state.rolls===0?'Baci kockice 🎲':'Baci ponovo · '+(3-state.rolls)+' '+(3-state.rolls===1?'bacanje':'bacanja');}
+function renderLeaders(){
+ $('leaderboard').replaceChildren();$('leaderboard').style.setProperty('--players',state.names.length);
+ state.names.forEach((name,i)=>{const b=el('button',undefined,'player'+(i===state.turn&&!state.over?' active':'')+(i===view?' viewed':''));b.type='button';b.setAttribute('aria-pressed',String(i===view));b.setAttribute('aria-label',name+': '+total(state.sheets[i])+' poena. Prikaži tabelu.');b.append(el('span',name,'name'),el('strong',String(total(state.sheets[i]))),el('span',i===state.turn&&!state.over?'NA REDU':filledCount(state.sheets[i])+' / 52 polja','turn'));b.addEventListener('click',()=>{view=i;renderLeaders();renderSheet();});$('leaderboard').append(b);});
+}
+function summaryRow(label,values,cls){const tr=el('tr',undefined,cls);const th=el('th',label);th.scope='row';tr.append(th);values.forEach(v=>tr.append(el('td',String(v))));return tr;}
+function renderSheet(){
+ const sheet=state.sheets[view],totals=sheet.map(columnTotals);$('sheet').replaceChildren();$('sheetTitle').textContent='Tabela: '+state.names[view];$('sheetHint').textContent=view!==state.turn&&!state.over?'Pregled rezultata. Za upis izaberi igrača koji je na redu.':state.over?'Konačni rezultati.':state.rolls===0?'Prvo baci kockice.':state.announced!==null?'Najavljeno polje je označeno ljubičasto.':'Dodirni dozvoljeno polje da potvrdiš upis ili najavu.';
+ for(let row=0;row<13;row++){
+  const tr=el('tr',undefined,row===6||row===8?'break-top':'');const th=el('th',ROWS[row]);th.scope='row';tr.append(th);
+  for(let col=0;col<4;col++){
+   const td=el('td'),value=sheet[col][row];const allowed=view===state.turn&&canUse(row,col);const announce=allowed&&col===3&&state.announced===null;const preview=allowed&&!announce?score(row,state.dice,state.rolls):null;
+   const b=el('button',value!==null?String(value):announce?'Najavi':preview!==null?String(preview):'—','cell'+(value!==null?' filled':allowed?' possible'+(preview===0?' zero':''):'')+(announce?' announce':'')+(allowed&&state.announced===row&&col===3?' target':''));b.type='button';b.disabled=!allowed;
+   b.setAttribute('aria-label',ROWS[row]+', '+COLS[col]+': '+(value!==null?value+' upisano':announce?'najavi ovo polje':preview!==null?'predlog '+preview+' poena':'nije dostupan upis'));b.addEventListener('click',()=>choose(row,col));td.append(b);tr.append(td);
+  }
+  $('sheet').append(tr);
+  if(row===5){$('sheet').append(summaryRow('Zbir 1–6',totals.map(t=>t.upper),'sum'));$('sheet').append(summaryRow('Bonus ≥ 60',totals.map(t=>t.bonus),'sum'));}
+  if(row===7)$('sheet').append(summaryRow('(Maks.−Min.) × 1',totals.map(t=>t.middle),'sum'));
+ }
+ $('sheet').append(summaryRow('Ukupno',totals.map(t=>t.total),'grand'));
+}
+function render(){
+ const used=state.sheets.reduce((n,s)=>n+filledCount(s),0);$('round').textContent=state.over?'Završeno · '+state.names.length+' '+(state.names.length===1?'igrač':'igrača'):'Krug '+(Math.floor(used/state.names.length)+1)+' / 52';
+ $('turnTitle').textContent=state.over?'Bravo, igrači!':state.names[state.turn]+' je na redu';$('rollCount').textContent=state.over?'Sva polja su popunjena.':'Bacanje '+state.rolls+' / 3';
+ renderDice();renderRollButton();renderLeaders();renderSheet();
+ $('status').className='status'+(state.announced!==null?' announced':'');
+ $('status').textContent=state.over?'Pobednika i konačan poredak pogledaj iznad.':state.announced!==null?'Najava: '+ROWS[state.announced]+'. Nastavi bacanje ili upiši rezultat u ovo polje.':state.rolls===0?'Baci svih pet kockica za početak poteza.':state.rolls===1?'Zadrži željene kockice. Možeš ponovo da bacaš, upišeš rezultat ili najaviš polje u koloni N.':state.rolls===3?'Iskoristio/la si tri bacanja. Izaberi dozvoljeno polje i upiši rezultat.':'Možeš još jednom da baciš ili da upišeš rezultat.';
+ $('result').hidden=!state.over;
+ if(state.over){const ranked=state.names.map((name,i)=>({name,points:total(state.sheets[i])})).sort((a,b)=>b.points-a.points);const winners=ranked.filter(x=>x.points===ranked[0].points);$('resultText').textContent=(ranked.length===1?'Tvoj rezultat: '+ranked[0].points+' poena.':winners.length===1?'Pobednik: '+winners[0].name+'!':'Podeljena pobeda: '+winners.map(x=>x.name).join(', ')+'.')+'\n'+ranked.map((x,i)=>(i+1)+'. '+x.name+' — '+x.points+' poena').join('\n');}
+}
+function showSetup(){saved=readSaved();$('resumeBox').hidden=!saved;if(saved)$('resumeText').textContent=(saved.over?'Sačuvani rezultati: ':'Sačuvana partija: ')+saved.names.join(', ')+'.';$('setup').hidden=false;$('game').hidden=true;$('players').focus();}
+$('settings').addEventListener('submit',e=>{e.preventDefault();requestStart();});$('players').addEventListener('change',updateNames);$('roll').addEventListener('click',roll);
+$('confirmYes').addEventListener('click',()=>{const action=confirmAction;confirmAction=null;$('confirmDialog').close();if(action)action();});$('confirmNo').addEventListener('click',()=>{confirmAction=null;$('confirmDialog').close();});$('confirmDialog').addEventListener('cancel',()=>confirmAction=null);
+$('newGame').addEventListener('click',showSetup);$('playAgain').addEventListener('click',showSetup);
+$('resume').addEventListener('click',()=>{if(!saved)return;state=JSON.parse(JSON.stringify(saved));view=state.turn;$('setup').hidden=true;$('game').hidden=false;render();$('saveNote').textContent='✓ Učitana sačuvana partija.';});
+updateNames();showSetup();
+</script>
+</body>
+</html>
