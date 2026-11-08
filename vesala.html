@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vešala</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--tx:#1d1d1f;--mut:#6b6b70;--ac:#2f6fed;--acx:#fff;--ok:#1f9d55;--bad:#d6453d;--bd:#e2dfd7}
+@media (prefers-color-scheme:dark){:root{--bg:#17181b;--card:#222428;--tx:#f0f0f2;--mut:#9a9aa2;--ac:#6b9bff;--acx:#10131a;--ok:#4cc783;--bad:#ef6b63;--bd:#33363c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:520px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:8px 0 2px}
+p.sub{color:var(--mut);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mut);margin:6px 0 3px}
+input{width:100%;font:inherit;padding:11px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+input.code{font-size:26px;letter-spacing:.35em;text-align:center;text-transform:uppercase}
+button{font:inherit;font-weight:600;padding:12px 16px;border-radius:10px;border:0;background:var(--ac);color:var(--acx);width:100%;cursor:pointer;margin-top:10px}
+button.sec{background:transparent;color:var(--ac);border:1px solid var(--bd)}
+button:disabled{opacity:.4}
+.err{color:var(--bad);min-height:1.3em;font-size:14px;margin-top:6px}
+.big{font-size:40px;font-weight:800;letter-spacing:.2em;text-align:center;color:var(--ac)}
+.pl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)}
+.pl:last-child{border:0}
+.me{font-weight:700}
+.small{font-size:13px;color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.timer{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.word{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;margin:8px 0}
+.wd{display:flex;gap:3px}
+.lt{width:25px;height:34px;border-bottom:3px solid var(--tx);text-align:center;font-size:21px;font-weight:700;line-height:34px}
+.kb{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.kb button{width:calc(12.5% - 6px);min-width:34px;margin:0;padding:9px 0;font-size:16px}
+.kb button.hit{background:var(--ok);color:#fff;opacity:1}.kb button.miss{background:var(--bad);color:#fff;opacity:.6}
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.groups button{font-size:18px;padding:18px 8px;margin:0}
+.fig{display:flex;justify-content:center;color:var(--tx)}
+.win{text-align:center;font-size:21px;font-weight:800;color:var(--ok)}
+.lose{text-align:center;font-size:21px;font-weight:800;color:var(--bad)}
+</style>
+</head>
+<body>
+<main id="app"><p class="sub">Učitavanje…</p></main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDWpgn7qQjSrk9WaI0UhGQyaTv2SCCh5kc",
+  authDomain: "sifra-62129.firebaseapp.com",
+  databaseURL: "https://sifra-62129-default-rtdb.firebaseio.com",
+  projectId: "sifra-62129",
+  appId: "1:800751511664:web:e53e0eb6e392922a456cb5"
+};
+
+/* ===== Baza srpskih reči po grupama – slobodno dodaj nove reči ===== */
+const GROUPS = {
+  'Stvar': { ico: '🪑', words: 'sto,stolica,krevet,ormar,televizor,telefon,računar,sat,ogledalo,lampa,čaša,tanjir,viljuška,kašika,nož,šolja,činija,lonac,tiganj,sunđer,četka,češalj,kofer,torba,ranac,kišobran,naočare,ključ,brava,vrata,prozor,zavesa,jastuk,ćebe,peškir,sapun,olovka,sveska,knjiga,gumica,makaze,lenjir,bicikl,automobil,čekić,testera,klešta,šrafciger,ekser,merdevine,metla,usisivač,frižider,šporet,mikser,toster,pegla,slušalice,fotelja,flaša' },
+  'Životinja': { ico: '🐾', words: 'medved,vuk,lisica,zec,jelen,srna,veverica,jež,kornjača,žaba,zmija,gušter,krokodil,slon,žirafa,zebra,nosorog,lav,tigar,leopard,gepard,majmun,gorila,kengur,pingvin,delfin,kit,ajkula,hobotnica,orao,sokol,vrabac,golub,lasta,roda,patka,guska,kokoška,petao,ćuran,magarac,konj,krava,svinja,ovca,koza,krtica,puž,pčela,mrav,leptir,komarac,pauk,bubamara,slepi miš,šaran,pastrmka,jegulja,papagaj,kamila' },
+  'Biljka': { ico: '🌿', words: 'hrast,bukva,jasen,breza,vrba,jela,bor,smreka,topola,lipa,javor,kesten,orah,jabuka,kruška,šljiva,trešnja,višnja,kajsija,breskva,grožđe,malina,jagoda,kupina,borovnica,paradajz,paprika,krastavac,luk,beli luk,šargarepa,krompir,kupus,spanać,salata,peršun,bosiljak,nana,žalfija,lavanda,ruža,ljiljan,zumbul,karanfil,ljubičica,maslačak,detelina,bagrem,pšenica,kukuruz,suncokret,ovas,ječam,kaktus,palma,bambus,paprat,mahovina,tikva,pasulj,sočivo' },
+  'Država': { ico: '🌍', words: 'Srbija,Hrvatska,Slovenija,Crna Gora,Severna Makedonija,Albanija,Grčka,Bugarska,Rumunija,Mađarska,Austrija,Nemačka,Francuska,Italija,Španija,Portugal,Švajcarska,Holandija,Belgija,Danska,Norveška,Švedska,Finska,Rusija,Ukrajina,Poljska,Češka,Slovačka,Turska,Egipat,Maroko,Alžir,Tunis,Nigerija,Kenija,Etiopija,Južna Afrika,Kina,Japan,Indija,Pakistan,Tajland,Vijetnam,Indonezija,Australija,Novi Zeland,Kanada,Meksiko,Brazil,Argentina,Čile,Peru,Kolumbija,Kuba,Island,Irska,Velika Britanija,Bosna i Hercegovina,Kipar,Malta' }
+};
+Object.values(GROUPS).forEach(g => g.list = g.words.split(',').map(w => w.trim().toUpperCase()));
+const LETTERS = 'ABCČĆDĐEFGHIJKLMNOPRSŠTUVZŽ'.split('');
+const MAXW = 6, TURN = 25000, WINS_FOR_CHOICE = 3;
+
+const $app = document.getElementById('app');
+const LS = { get(k){ try { return localStorage.getItem(k) || ''; } catch(e){ return ''; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+let pid = LS.get('geo-pid');
+if (!pid) { pid = 'g' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); LS.set('geo-pid', pid); }
+let myName = LS.get('igre-name') || LS.get('geo-name') || LS.get('sifra-name'), code = null, game = null, ref = null, msg = '', fdb, offset = 0, skipKey = '', wdraft = '';
+const now = () => Date.now() + offset;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+const setMsg = t => { msg = t; const el = document.getElementById('err'); if (el) el.textContent = t; };
+const mkCode = () => { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; let c=''; for (let i=0;i<4;i++) c += a[Math.floor(Math.random()*a.length)]; return c; };
+const enc = w => btoa(unescape(encodeURIComponent(w))).split('').reverse().join('');
+const dec = e => decodeURIComponent(escape(atob(e.split('').reverse().join(''))));
+const nrm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'dj').replace(/\s+/g,'');
+const solved = (w, g) => [...w].every(c => c === ' ' || g.includes(c));
+const misses = (w, g, x) => g.filter(l => !w.includes(l)).length + (x || 0);
+
+/* ---------- logika igre (transakcije) ---------- */
+function passTurn(cur){ const pl = cur.players, i = pl.findIndex(p => p.id === cur.turnPid); cur.turnPid = pl[(i+1) % pl.length].id; cur.turnEnds = now() + TURN; }
+function finish(cur, winner, w){
+  cur.status = 'roundend'; cur.winnerId = winner || null; cur.reveal = w;
+  if (winner) { const p = cur.players.find(x => x.id === winner); p.t = (p.t||0) + 1; p.s = (p.s||0) + 1; }
+}
+function startRound(cur){
+  const list = GROUPS[cur.group].list; let used = cur.used || [];
+  let av = list.filter(w => !used.includes(w)); if (!av.length) { used = []; av = list; }
+  const w = av[Math.floor(Math.random()*av.length)];
+  cur.used = used.concat([w]); cur.w = enc(w); cur.guessed = []; cur.extra = 0; cur.winnerId = null; cur.reveal = null;
+  cur.round = (cur.round||0) + 1; cur.turnPid = cur.players[cur.round % cur.players.length].id; cur.turnEnds = now() + TURN; cur.status = 'playing';
+}
+function guessLetter(L){
+  ref.transaction(cur => {
+    if (!cur || cur.status !== 'playing' || cur.turnPid !== pid) return;
+    const g = cur.guessed || [], w = dec(cur.w); if (g.includes(L)) return;
+    g.push(L); cur.guessed = g;
+    if (w.includes(L)) { if (solved(w, g)) finish(cur, pid, w); else cur.turnEnds = now() + TURN; }
+    else if (misses(w, g, cur.extra) >= MAXW) finish(cur, null, w); else passTurn(cur);
+    return cur;
+  });
+}
+function guessWord(){
+  const t = val('wg').trim(); if (!t) return; wdraft = '';
+  ref.transaction(cur => {
+    if (!cur || cur.status !== 'playing' || cur.turnPid !== pid) return;
+    const w = dec(cur.w);
+    if (nrm(t) === nrm(w)) { cur.guessed = [...new Set([...(cur.guessed||[]), ...[...w].filter(c => c !== ' ')])]; finish(cur, pid, w); }
+    else { cur.extra = (cur.extra||0) + 1; if (misses(w, cur.guessed||[], cur.extra) >= MAXW) finish(cur, null, w); else passTurn(cur); }
+    return cur;
+  });
+}
+function skipTurn(){
+  const te = game.turnEnds; if (skipKey === code + te) return; skipKey = code + te;
+  ref.transaction(cur => { if (!cur || cur.status !== 'playing' || cur.turnEnds !== te) return; passTurn(cur); return cur; });
+}
+function chooseGroup(g){
+  ref.transaction(cur => { if (!cur || cur.status !== 'choose' || cur.chooserId !== pid || !GROUPS[g]) return; cur.group = g; startRound(cur); return cur; });
+}
+function nextRound(){
+  ref.transaction(cur => {
+    if (!cur || cur.status !== 'roundend') return;
+    const wp = cur.players.find(p => p.id === cur.winnerId);
+    if (wp && (wp.s||0) >= WINS_FOR_CHOICE) { wp.s = 0; cur.chooserId = wp.id; cur.status = 'choose'; } else startRound(cur);
+    return cur;
+  });
+}
+function startGame(){ ref.transaction(cur => { if (!cur || cur.status !== 'lobby' || cur.hostId !== pid || cur.players.length < 2) return; cur.status = 'choose'; cur.chooserId = cur.hostId; cur.round = 0; return cur; }); }
+
+/* ---------- povezivanje ---------- */
+function boot(){
+  try { firebase.initializeApp(firebaseConfig); fdb = firebase.database(); fdb.ref('.info/serverTimeOffset').on('value', s => offset = s.val() || 0); }
+  catch(e){ $app.innerHTML = '<div class="card"><p class="sub">Greška pri povezivanju sa Firebase-om.</p></div>'; return; }
+  setInterval(tick, 300);
+  document.addEventListener('input', e => { if (e.target.id === 'wg') wdraft = e.target.value; });
+  const s = LS.get('ves-code'); if (s) watch(s); else render();
+}
+function watch(c){
+  if (ref) ref.off();
+  code = c; LS.set('ves-code', c); ref = fdb.ref('games/ves' + c);
+  ref.on('value', snap => {
+    const v = snap.val();
+    if (!v) { leave(); msg = 'Igra ' + c + ' ne postoji.'; render(); return; }
+    v.players = v.players || []; v.guessed = v.guessed || []; game = v; render();
+  }, () => { msg = 'Veza sa igrom je prekinuta.'; render(); });
+}
+function leave(){ if (ref) { ref.off(); ref = null; } code = null; game = null; LS.set('ves-code',''); }
+async function createGame(){
+  const name = val('name').trim(); if (!name) return setMsg('Upiši svoje ime.');
+  myName = name; LS.set('igre-name', name);
+  try { const c = mkCode(); await fdb.ref('games/ves' + c).set({ code: c, kind: 'ves', hostId: pid, status: 'lobby', players: [{ id: pid, name, t: 0, s: 0 }], created: Date.now() }); msg = ''; watch(c); }
+  catch(e){ setMsg('Nije moguće napraviti igru. Proveri Firebase pravila.'); }
+}
+async function joinGame(){
+  const name = val('name').trim(), c = val('jcode').trim().toUpperCase();
+  if (!name) return setMsg('Upiši svoje ime.'); if (c.length !== 4) return setMsg('Kod igre ima 4 slova.');
+  myName = name; LS.set('igre-name', name);
+  try {
+    const g = fdb.ref('games/ves' + c);
+    if (!(await g.once('value')).exists()) return setMsg('Igra sa tim kodom ne postoji.');
+    let err = '';
+    await g.transaction(cur => {
+      if (cur === null) return cur;
+      const pl = cur.players || [];
+      if (pl.some(p => p.id === pid)) return;
+      if (cur.status !== 'lobby') { err = 'Igra je već počela.'; return; }
+      if (pl.length >= 4) { err = 'Igra je popunjena (najviše 4 igrača).'; return; }
+      pl.push({ id: pid, name, t: 0, s: 0 }); cur.players = pl; return cur;
+    });
+    if (err) return setMsg(err);
+    msg = ''; watch(c);
+  } catch(e){ setMsg('Pridruživanje nije uspelo.'); }
+}
+function tick(){
+  if (!game || game.status !== 'playing') return;
+  const rem = game.turnEnds - now(), el = document.getElementById('tm');
+  if (el) { const s = Math.max(0, Math.ceil(rem/1000)); el.textContent = s; el.style.color = s <= 7 ? 'var(--bad)' : ''; }
+  if (rem < -1200) skipTurn();
+}
+
+/* ---------- prikaz ---------- */
+function fig(n){
+  const L = (a,b,c,d) => `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}"/>`;
+  return `<svg viewBox="0 0 140 150" width="150" height="160" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round">${L(10,140,70,140)}${L(40,140,40,10)}${L(40,10,100,10)}${L(100,10,100,28)}${n>=1?'<circle cx="100" cy="40" r="12"/>':''}${n>=2?L(100,52,100,92):''}${n>=3?L(100,60,82,78):''}${n>=4?L(100,60,118,78):''}${n>=5?L(100,92,84,118):''}${n>=6?L(100,92,116,118):''}</svg>`;
+}
+function roster(){
+  return game.players.map(p => `<div class="pl"><span class="${p.id===pid?'me':''}">${esc(p.name)}${p.id===game.hostId?' <span class="small">(domaćin)</span>':''}${game.status==='playing'&&game.turnPid===p.id?' ◀':''}</span><span>🏆 ${p.t||0} <span class="small">(${p.s||0}/${WINS_FOR_CHOICE})</span></span></div>`).join('');
+}
+function render(){
+  const ae = document.activeElement, hadWg = ae && ae.id === 'wg', keep = {};
+  ['name','jcode'].forEach(i => { const el = document.getElementById(i); if (el) keep[i] = el.value; });
+  let h = '<h1>🔤 Vešala</h1><p class="sub">Za 2–4 igrača · računar bira reč</p>';
+  if (!game) h += home(keep); else if (game.status === 'lobby') h += lobby(); else if (game.status === 'choose') h += choose();
+  else h += play();
+  if (game) h += '<button class="sec" data-a="leave">Napusti igru</button>';
+  h += '<div class="err" id="err">' + esc(msg) + '</div>';
+  $app.innerHTML = h;
+  ['name','jcode'].forEach(i => { const el = document.getElementById(i); if (el && keep[i] !== undefined) el.value = keep[i]; });
+  const wg = document.getElementById('wg'); if (wg) { wg.value = wdraft; if (hadWg) wg.focus(); }
+  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => ({create:createGame, join:joinGame, start:startGame, next:nextRound, leave:() => { leave(); msg=''; render(); }, word:guessWord, copy:() => { try { navigator.clipboard.writeText(code); setMsg('Kod je kopiran.'); } catch(e){} }})[b.dataset.a]());
+  document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => guessLetter(b.dataset.l));
+  document.querySelectorAll('[data-g]').forEach(b => b.onclick = () => chooseGroup(b.dataset.g));
+  tick();
+}
+function home(k){
+  return `<div class="card"><label>Tvoje ime</label><input id="name" maxlength="16" value="${esc(k.name ?? myName)}"><button data-a="create">Napravi igru</button></div>
+  <div class="card"><b>Pridruži se igri</b><label>Kod igre</label><input id="jcode" class="code" maxlength="4" autocomplete="off"><button class="sec" data-a="join">Pridruži se</button></div>
+  <div class="card"><details><summary><b>Pravila</b></summary><p class="small">Igrač bira grupu (Stvar, Životinja, Biljka, Država), a računar izabere reč iz nje. Igrači naizmenično pogađaju slova (25 sekundi po potezu). Ko pogodi slovo, nastavlja. Pogrešno slovo prebacuje potez dalje i dodaje deo vešala. Ko otkrije poslednje slovo ili pogodi celu reč, osvaja rundu. Pogrešna cela reč se računa kao greška. Posle ${MAXW} grešaka niko ne osvaja rundu. Ko sakupi ${WINS_FOR_CHOICE} pobede, bira grupu za sledeću rundu.</p></details></div>`;
+}
+function lobby(){
+  let h = `<div class="card"><label style="text-align:center">Kod igre – podeli ga ostalima</label><div class="big">${esc(game.code)}</div><button class="sec" data-a="copy">Kopiraj kod</button></div><div class="card"><b>Igrači (${game.players.length}/4)</b>${roster()}</div>`;
+  if (game.hostId === pid) h += `<button data-a="start" ${game.players.length < 2 ? 'disabled' : ''}>Počni igru</button><p class="small">Potreban je bar još jedan igrač.</p>`;
+  else h += '<p class="small" style="text-align:center">Čekamo da domaćin pokrene igru…</p>';
+  return h;
+}
+function choose(){
+  const ch = game.players.find(p => p.id === game.chooserId), me = game.chooserId === pid;
+  let h = `<div class="card"><div class="row"><b>${me ? 'Ti biraš grupu!' : esc(ch ? ch.name : '') + ' bira grupu…'}</b></div>`;
+  if (me) h += '<div class="groups" style="margin-top:10px">' + Object.keys(GROUPS).map(g => `<button data-g="${g}">${GROUPS[g].ico}<br>${g}</button>`).join('') + '</div>';
+  return h + `</div><div class="card"><b>Igrači</b>${roster()}</div>`;
+}
+function play(){
+  const w = dec(game.w), g = game.guessed, over = game.status === 'roundend', n = misses(w, g, game.extra);
+  const mine = game.turnPid === pid && !over, cur = game.players.find(p => p.id === game.turnPid);
+  const shown = over ? w : null;
+  let h = `<div class="card"><div class="row"><div><div class="small">Runda ${game.round} · grupa</div><b>${GROUPS[game.group].ico} ${esc(game.group)}</b></div>${over ? '' : `<div class="timer"><span id="tm">25</span> s</div>`}</div>
+  <div class="fig">${fig(n)}</div><div class="small" style="text-align:center">Greške: ${n}/${MAXW}</div>
+  <div class="word">${w.split(' ').map(x => `<div class="wd">${[...x].map(c => `<div class="lt">${(g.includes(c) || shown) ? esc(c) : ''}</div>`).join('')}</div>`).join('')}</div></div>`;
+  if (over) {
+    const wn = game.players.find(p => p.id === game.winnerId);
+    h += `<div class="card">${wn ? `<div class="win">🏆 ${esc(wn.name)} osvaja rundu!</div>${(wn.s||0) >= WINS_FOR_CHOICE ? '<p class="small" style="text-align:center">Ima ' + WINS_FOR_CHOICE + ' pobede – bira grupu za sledeću rundu.</p>' : ''}` : '<div class="lose">Niko nije pogodio reč 😕</div>'}<button data-a="next">Sledeća runda</button></div>`;
+  } else {
+    h += `<div class="card"><div style="text-align:center;margin-bottom:8px"><b>${mine ? 'Tvoj red!' : 'Na potezu: ' + esc(cur ? cur.name : '')}</b></div><div class="kb">${LETTERS.map(L => `<button data-l="${L}" class="${g.includes(L) ? (w.includes(L) ? 'hit' : 'miss') : ''}" ${(!mine || g.includes(L)) ? 'disabled' : ''}>${L}</button>`).join('')}</div>`;
+    if (mine) h += `<label>Ili pogodi celu reč (greška se računa kao pogrešno slovo)</label><input id="wg" autocomplete="off"><button class="sec" data-a="word">Pogodi reč</button>`;
+    h += '</div>';
+  }
+  return h + `<div class="card"><b>Igrači</b> <span class="small">🏆 pobede (do ${WINS_FOR_CHOICE})</span>${roster()}</div>`;
+}
+boot();
+</script>
+</body>
+</html>
