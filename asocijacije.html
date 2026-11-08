@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Asocijacije</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--tx:#1d1d1f;--mut:#6b6b70;--ac:#2f6fed;--acx:#fff;--ok:#1f9d55;--bad:#d6453d;--bd:#e2dfd7;--hl:#e8f0ff}
+@media (prefers-color-scheme:dark){:root{--bg:#17181b;--card:#222428;--tx:#f0f0f2;--mut:#9a9aa2;--ac:#6b9bff;--acx:#10131a;--ok:#4cc783;--bad:#ef6b63;--bd:#33363c;--hl:#2a3350}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:560px;margin:0 auto;padding:14px}
+h1{font-size:26px;margin:8px 0 2px}
+p.sub{color:var(--mut);margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mut);margin:6px 0 3px}
+input{width:100%;font:inherit;padding:11px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+input.code{font-size:26px;letter-spacing:.35em;text-align:center;text-transform:uppercase}
+button{font:inherit;font-weight:600;padding:12px 16px;border-radius:10px;border:0;background:var(--ac);color:var(--acx);width:100%;cursor:pointer;margin-top:10px}
+button.sec{background:transparent;color:var(--ac);border:1px solid var(--bd)}
+button:disabled{opacity:.4}
+.err{color:var(--bad);min-height:1.3em;font-size:14px;margin-top:6px}
+.big{font-size:40px;font-weight:800;letter-spacing:.2em;text-align:center;color:var(--ac)}
+.pl{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)}
+.pl:last-child{border:0}
+.me{font-weight:700}
+.small{font-size:13px;color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.timer{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.bd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.col{display:flex;flex-direction:column;gap:6px}
+.bd button,.sl{margin:0;padding:6px 2px;min-height:46px;font-size:13px;line-height:1.15;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:9px;word-break:break-word;overflow-wrap:anywhere}
+.fd{background:var(--ac);color:var(--acx);font-weight:700;font-size:15px}
+.fd.op{background:var(--hl);color:var(--tx);font-weight:600;font-size:13px}
+.fd:disabled{opacity:1}.fd:not(.op):disabled{opacity:.5}
+.sl{border:2px dashed var(--ac);font-weight:800;color:var(--ac)}
+.sl.ok,.fn.ok{border:2px solid var(--ok);color:var(--ok);background:transparent}
+.fn{margin-top:8px;min-height:50px;display:flex;align-items:center;justify-content:center;border:2px dashed var(--ac);border-radius:10px;font-weight:800;color:var(--ac);text-align:center;padding:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chips button{width:auto;margin:0;padding:8px 14px;background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.chips button.on{background:var(--ac);color:var(--acx)}
+.win{text-align:center;font-size:21px;font-weight:800;color:var(--ok)}
+.log{text-align:center;font-size:14px;color:var(--mut);min-height:1.3em;margin-bottom:8px}
+</style>
+</head>
+<body>
+<main id="app"><p class="sub">Učitavanje…</p></main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDWpgn7qQjSrk9WaI0UhGQyaTv2SCCh5kc",
+  authDomain: "sifra-62129.firebaseapp.com",
+  databaseURL: "https://sifra-62129-default-rtdb.firebaseio.com",
+  projectId: "sifra-62129",
+  appId: "1:800751511664:web:e53e0eb6e392922a456cb5"
+};
+
+/* ===== Baza asocijacija: [konačno rešenje, [[rešenje kolone (alternative odvoji sa /), [4 polja]], ×4]] ===== */
+const PZ = [
+ ['LETO', [['PLAŽA',['more','sunce','peščana','školjka']],['ODMOR/GODIŠNJI ODMOR',['putovanje','hotel','aranžman','raspust']],['OSVEŽENJE',['sladoled','lubenica','limunada','frižider']],['SUNČANJE',['kupaći','suncobran','krema','bronza']]]],
+ ['ŠKOLA', [['TABLA',['kreda','spužva','zelena','dežurni']],['ČAS',['zvono','45 minuta','predavanje','odmor']],['PRIBOR',['olovka','pernica','lenjir','gumica']],['OCENA',['petica','jedinica','dnevnik','zaključna']]]],
+ ['KUHINJA', [['ŠPORET',['ringla','rerna','tiganj','lonac']],['FRIŽIDER/HLADNJAK',['mleko','jaja','sir','zamrzivač']],['ESCAJG/PRIBOR ZA JELO',['kašika','viljuška','nož','tanjir']],['SUDOPERA',['slavina','sudovi','sunđer','deterdžent']]]],
+ ['FUDBAL', [['GOL',['golman','stativa','mreža','prečka']],['KARTON',['sudija','žuti','crveni','zvižduk']],['KLUB',['Zvezda','Partizan','Barselona','Real']],['UTAKMICA',['devedeset','poluvreme','produžeci','rezultat']]]],
+ ['AUTOMOBIL', [['TOČAK',['guma','felna','rezervni','šraf']],['GORIVO',['benzin','dizel','pumpa','rezervoar']],['SVETLA',['žmigavac','farovi','stop','maglenka']],['MOTOR',['cilindar','klip','ulje','konjske snage']]]],
+ ['BOŽIĆ', [['JELKA',['kuglice','svetlucave','zelena','bor']],['BADNJAK',['slama','hrast','vatra','6. januar']],['DEDA MRAZ',['irvasi','sanke','dimnjak','crveno odelo']],['TRPEZA',['pečenica','česnica','sarma','ručak']]]],
+ ['MORE', [['TALAS',['plima','oseka','pena','surfer']],['BROD',['jedro','sidro','kapetan','luka']],['RIBA',['udica','mreža','ribolov','riblja čorba']],['PLAŽA',['ležaljka','pesak','kabina','šljunak']]]],
+ ['PLANINA', [['VRH',['uspon','2000 metara','planinar','zastava']],['SKIJALIŠTE',['sneg','ski','skijaš','žičara']],['ČETINARI',['bor','smrča','jela','šišarka']],['PLANINARENJE',['ranac','cipele','markacije','staza']]]],
+ ['BOLNICA', [['HITNA POMOĆ/HITNA',['nosila','sirena','plavo svetlo','194']],['LEK',['tableta','sirup','recept','apoteka']],['LEKAR/DOKTOR',['stetoskop','mantil','pregled','ordinacija']],['OPERACIJA',['sala','skalpel','anestezija','hirurg']]]],
+ ['SRBIJA', [['PRESTONICA/BEOGRAD',['Kalemegdan','Sava i Dunav','Knez Mihailova','Skadarlija']],['JELO',['ćevapi','sarma','kajmak','pljeskavica']],['SPORT',['Đoković','Jokić','Zvezda','Partizan']],['ZASTAVA/TROBOJKA',['crvena','plava','bela','dvoglavi orao']]]],
+ ['ZIMA', [['SNEG',['grudva','sneško','pahulja','mećava']],['ODEĆA/ZIMSKA ODEĆA',['kapa','šal','rukavice','jakna']],['GREJANJE',['peć','drva','radijator','kaloriferi']],['SPORTOVI/ZIMSKI SPORTOVI',['klizanje','sanjkanje','skijanje','hokej']]]],
+ ['KAFA', [['ŠOLJA/ŠOLJICA',['tacna','kašičica','porcelan','drška']],['KAFIĆ',['barista','sto','terasa','konobar']],['ZRNO',['mlin','mlevenje','pržena','vreća']],['KOFEIN',['budan','jutro','energija','espreso']]]],
+ ['FILM', [['BIOSKOP',['karta','kokice','sala','platno']],['GLUMAC',['uloga','Oskar','zvezda','holivud']],['REŽISER/REŽIJA',['kamera','klapa','scenario','akcija']],['PREMIJERA',['trejler','plakat','crveni tepih','prva projekcija']]]],
+ ['PIJACA', [['POVRĆE',['kupus','paradajz','paprika','luk']],['PRODAVAC/TEZGAR',['tezga','vaga','cena','nudi']],['VOĆE',['jabuka','kruška','šljiva','breskva']],['KUPOVINA',['kesa','korpa','kusur','cenkanje']]]]
+];
+const COLS = 'ABCD', ROUNDS = 3, TURN = 40000;
+
+const $app = document.getElementById('app');
+const LS = { get(k){ try { return localStorage.getItem(k) || ''; } catch(e){ return ''; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+let pid = LS.get('geo-pid');
+if (!pid) { pid = 'g' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); LS.set('geo-pid', pid); }
+let myName = LS.get('igre-name') || LS.get('geo-name') || LS.get('sifra-name'), code = null, game = null, ref = null, msg = '', fdb, offset = 0, skipKey = '', adraft = '', target = null;
+const now = () => Date.now() + offset;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+const setMsg = t => { msg = t; const el = document.getElementById('err'); if (el) el.textContent = t; };
+const mkCode = () => { const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; let c=''; for (let i=0;i<4;i++) c += a[Math.floor(Math.random()*a.length)]; return c; };
+const nrm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'dj').replace(/[^a-z0-9]/g,'');
+const match = (sol, t) => { const n = nrm(t); return n.length > 0 && sol.split('/').some(a => nrm(a) === n); };
+const allOpen = op => !op.includes('0');
+const closedIn = (op, c) => op.slice(c*4, c*4+4).split('').filter(x => x === '0').length;
+const setAt = (s, i, ch) => s.slice(0,i) + ch + s.slice(i+1);
+
+/* ---------- logika (transakcije) ---------- */
+function nextTurn(cur, miss){
+  const pl = cur.players, i = pl.findIndex(p => p.id === cur.turnPid);
+  cur.turnPid = pl[(i+1) % pl.length].id; cur.phase = allOpen(cur.op) ? 'answer' : 'open'; cur.turnEnds = now() + TURN;
+  if (miss && allOpen(cur.op)) { cur.idle = (cur.idle||0) + 1; if (cur.idle >= pl.length * 2) endRound(cur, null); }
+}
+function endRound(cur, winner){ cur.status = 'roundend'; cur.winnerId = winner; cur.op = '1'.repeat(16); cur.cs = '1111'; }
+function startRound(cur){
+  let used = cur.usedPz || [], av = PZ.map((_, i) => i).filter(i => !used.includes(i)); if (!av.length) { used = []; av = PZ.map((_, i) => i); }
+  const p = av[Math.floor(Math.random()*av.length)];
+  cur.usedPz = used.concat([p]); cur.pz = p; cur.op = '0'.repeat(16); cur.cs = '0000'; cur.round = (cur.round||0) + 1;
+  cur.turnPid = cur.players[(cur.round - 1) % cur.players.length].id; cur.phase = 'open'; cur.turnEnds = now() + TURN; cur.idle = 0; cur.winnerId = null; cur.last = ''; cur.status = 'play';
+}
+function openField(k){
+  ref.transaction(cur => {
+    if (!cur || cur.status !== 'play' || cur.turnPid !== pid || cur.phase !== 'open' || cur.op[k] !== '0') return;
+    cur.op = setAt(cur.op, k, '1'); cur.phase = 'answer'; cur.turnEnds = now() + TURN; cur.last = ''; return cur;
+  });
+}
+function answer(){
+  const t = val('ans').trim(), tg = target; if (!t || tg === null) return setMsg('Izaberi kolonu ili konačno i upiši odgovor.'); adraft = ''; setMsg('');
+  ref.transaction(cur => {
+    if (!cur || cur.status !== 'play' || cur.turnPid !== pid || cur.phase !== 'answer') return;
+    const P = PZ[cur.pz], me = cur.players.find(p => p.id === pid);
+    if (tg === 'F' ? match(P[0], t) : (cur.cs[tg] === '0' && match(P[1][+tg][0], t))) {
+      if (tg === 'F') {
+        let pts = 10; for (let c=0;c<4;c++) if (cur.cs[c] === '0') pts += 2 + closedIn(cur.op, c);
+        me.sc = (me.sc||0) + pts; cur.last = me.name + ' pogađa konačno rešenje (+' + pts + ')'; endRound(cur, pid);
+      } else {
+        const pts = 2 + closedIn(cur.op, +tg); me.sc = (me.sc||0) + pts; cur.cs = setAt(cur.cs, +tg, '1');
+        for (let i=0;i<4;i++) cur.op = setAt(cur.op, +tg*4+i, '1');
+        cur.last = me.name + ' pogađa kolonu ' + COLS[tg] + ' (+' + pts + ')'; cur.idle = 0; cur.phase = allOpen(cur.op) ? 'answer' : 'open'; cur.turnEnds = now() + TURN;
+      }
+    } else { cur.last = me.name + ' nije pogodio/la'; nextTurn(cur, true); }
+    return cur;
+  });
+}
+function pass(){ ref.transaction(cur => { if (!cur || cur.status !== 'play' || cur.turnPid !== pid || cur.phase !== 'answer') return; cur.last = ''; nextTurn(cur, true); return cur; }); }
+function skipTurn(){
+  const te = game.turnEnds; if (skipKey === code + te) return; skipKey = code + te;
+  ref.transaction(cur => { if (!cur || cur.status !== 'play' || cur.turnEnds !== te) return; cur.last = 'Vreme je isteklo'; nextTurn(cur, true); return cur; });
+}
+function nextRound(){ ref.transaction(cur => { if (!cur || cur.status !== 'roundend') return; if (cur.round >= ROUNDS) cur.status = 'done'; else startRound(cur); return cur; }); }
+function startGame(){ ref.transaction(cur => { if (!cur || cur.status !== 'lobby' || cur.hostId !== pid || cur.players.length < 2) return; startRound(cur); return cur; }); }
+
+/* ---------- povezivanje ---------- */
+function boot(){
+  try { firebase.initializeApp(firebaseConfig); fdb = firebase.database(); fdb.ref('.info/serverTimeOffset').on('value', s => offset = s.val() || 0); }
+  catch(e){ $app.innerHTML = '<div class="card"><p class="sub">Greška pri povezivanju sa Firebase-om.</p></div>'; return; }
+  setInterval(tick, 300);
+  document.addEventListener('input', e => { if (e.target.id === 'ans') adraft = e.target.value; });
+  const s = LS.get('aso-code'); if (s) watch(s); else render();
+}
+function watch(c){
+  if (ref) ref.off();
+  code = c; LS.set('aso-code', c); ref = fdb.ref('games/aso' + c);
+  ref.on('value', snap => {
+    const v = snap.val();
+    if (!v) { leave(); msg = 'Igra ' + c + ' ne postoji.'; render(); return; }
+    v.players = v.players || []; game = v; render();
+  }, () => { msg = 'Veza sa igrom je prekinuta.'; render(); });
+}
+function leave(){ if (ref) { ref.off(); ref = null; } code = null; game = null; LS.set('aso-code',''); }
+async function createGame(){
+  const name = val('name').trim(); if (!name) return setMsg('Upiši svoje ime.');
+  myName = name; LS.set('igre-name', name);
+  try { const c = mkCode(); await fdb.ref('games/aso' + c).set({ code: c, kind: 'aso', hostId: pid, status: 'lobby', players: [{ id: pid, name, sc: 0 }], created: Date.now() }); msg = ''; watch(c); }
+  catch(e){ setMsg('Nije moguće napraviti igru. Proveri Firebase pravila.'); }
+}
+async function joinGame(){
+  const name = val('name').trim(), c = val('jcode').trim().toUpperCase();
+  if (!name) return setMsg('Upiši svoje ime.'); if (c.length !== 4) return setMsg('Kod igre ima 4 slova.');
+  myName = name; LS.set('igre-name', name);
+  try {
+    const g = fdb.ref('games/aso' + c);
+    if (!(await g.once('value')).exists()) return setMsg('Igra sa tim kodom ne postoji.');
+    let err = '';
+    await g.transaction(cur => {
+      if (cur === null) return cur;
+      const pl = cur.players || [];
+      if (pl.some(p => p.id === pid)) return;
+      if (cur.status !== 'lobby') { err = 'Igra je već počela.'; return; }
+      if (pl.length >= 4) { err = 'Igra je popunjena (najviše 4 igrača).'; return; }
+      pl.push({ id: pid, name, sc: 0 }); cur.players = pl; return cur;
+    });
+    if (err) return setMsg(err);
+    msg = ''; watch(c);
+  } catch(e){ setMsg('Pridruživanje nije uspelo.'); }
+}
+function tick(){
+  if (!game || game.status !== 'play') return;
+  const rem = game.turnEnds - now(), el = document.getElementById('tm');
+  if (el) { const s = Math.max(0, Math.ceil(rem/1000)); el.textContent = s; el.style.color = s <= 8 ? 'var(--bad)' : ''; }
+  if (rem < -1200) skipTurn();
+}
+
+/* ---------- prikaz ---------- */
+function roster(){
+  return game.players.map(p => `<div class="pl"><span class="${p.id===pid?'me':''}">${esc(p.name)}${p.id===game.hostId?' <span class="small">(domaćin)</span>':''}${game.status==='play'&&game.turnPid===p.id?' ◀':''}</span><b>${p.sc||0}</b></div>`).join('');
+}
+function board(P, canOpen){
+  let h = '<div class="bd">';
+  for (let c=0;c<4;c++){
+    h += '<div class="col">';
+    for (let i=0;i<4;i++){ const k = c*4+i, o = game.op[k] === '1'; h += `<button class="fd ${o?'op':''}" data-o="${k}" ${(canOpen && !o)?'':'disabled'}>${o ? esc(P[1][c][1][i]) : COLS[c] + (i+1)}</button>`; }
+    const s = game.cs[c] === '1'; h += `<div class="sl ${s?'ok':''}">${s ? esc(P[1][c][0].split('/')[0]) : COLS[c]}</div></div>`;
+  }
+  const f = game.status === 'roundend';
+  return h + `</div><div class="fn ${f?'ok':''}">${f ? esc(P[0]) : 'KONAČNO REŠENJE'}</div>`;
+}
+function render(){
+  const ae = document.activeElement, hadAns = ae && ae.id === 'ans', keep = {};
+  ['name','jcode'].forEach(i => { const el = document.getElementById(i); if (el) keep[i] = el.value; });
+  let h = '<h1>🧩 Asocijacije</h1><p class="sub">Za 2–4 igrača · ' + ROUNDS + ' asocijacije</p>';
+  if (!game) h += home(keep); else if (game.status === 'lobby') h += lobby(); else if (game.status === 'done') h += done(); else h += play();
+  if (game && game.status !== 'done') h += '<button class="sec" data-a="leave">Napusti igru</button>';
+  h += '<div class="err" id="err">' + esc(msg) + '</div>';
+  $app.innerHTML = h;
+  ['name','jcode'].forEach(i => { const el = document.getElementById(i); if (el && keep[i] !== undefined) el.value = keep[i]; });
+  const an = document.getElementById('ans'); if (an) { an.value = adraft; if (hadAns) an.focus(); }
+  document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => ({create:createGame, join:joinGame, start:startGame, next:nextRound, answer, pass, leave:() => { leave(); msg=''; render(); }, copy:() => { try { navigator.clipboard.writeText(code); setMsg('Kod je kopiran.'); } catch(e){} }})[b.dataset.a]());
+  document.querySelectorAll('[data-o]').forEach(b => b.onclick = () => openField(+b.dataset.o));
+  document.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { target = b.dataset.t; b.parentNode.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
+  tick();
+}
+function home(k){
+  return `<div class="card"><label>Tvoje ime</label><input id="name" maxlength="16" value="${esc(k.name ?? myName)}"><button data-a="create">Napravi igru</button></div>
+  <div class="card"><b>Pridruži se igri</b><label>Kod igre</label><input id="jcode" class="code" maxlength="4" autocomplete="off"><button class="sec" data-a="join">Pridruži se</button></div>
+  <div class="card"><details><summary><b>Pravila</b></summary><p class="small">Na tabli su 4 kolone (A, B, C, D) sa po 4 polja. Polja asociraju na rešenje kolone, a rešenja kolona na konačno rešenje. Na potezu otvoriš jedno polje, a zatim imaš jednu šansu da odgovoriš: rešenje neke kolone ili konačno rešenje (ili da preskočiš). Ako pogodiš, nastavljaš sa novim poljem, a ako promašiš, potez prelazi na sledećeg. Pogođena kolona nosi 2 poena plus broj još zatvorenih polja u njoj. Konačno rešenje nosi 10 poena plus bodove svih nepogođenih kolona. Potez traje ${TURN/1000} sekundi. Igra ima ${ROUNDS} asocijacije, pobeđuje ko ima najviše poena.</p></details></div>`;
+}
+function lobby(){
+  let h = `<div class="card"><label style="text-align:center">Kod igre – podeli ga ostalima</label><div class="big">${esc(game.code)}</div><button class="sec" data-a="copy">Kopiraj kod</button></div><div class="card"><b>Igrači (${game.players.length}/4)</b>${roster()}</div>`;
+  if (game.hostId === pid) h += `<button data-a="start" ${game.players.length < 2 ? 'disabled' : ''}>Počni igru</button><p class="small">Potreban je bar još jedan igrač.</p>`;
+  else h += '<p class="small" style="text-align:center">Čekamo da domaćin pokrene igru…</p>';
+  return h;
+}
+function play(){
+  const P = PZ[game.pz], over = game.status === 'roundend', mine = game.turnPid === pid && !over, cur = game.players.find(p => p.id === game.turnPid);
+  const open = !over && mine && game.phase === 'open', ans = !over && mine && game.phase === 'answer';
+  let h = `<div class="card"><div class="row"><div class="small">Asocijacija ${game.round}/${ROUNDS}</div>${over ? '' : '<div class="timer"><span id="tm">40</span> s</div>'}</div>
+  <div class="log">${esc(game.last || '')}</div>${board(P, open)}</div>`;
+  if (over) {
+    const w = game.players.find(p => p.id === game.winnerId);
+    h += `<div class="card">${w ? `<div class="win">🏆 ${esc(w.name)} pogađa konačno rešenje!</div>` : '<div class="small" style="text-align:center">Niko nije pogodio konačno rešenje. Rešenja su otkrivena.</div>'}<button data-a="next">${game.round >= ROUNDS ? 'Prikaži pobednika' : 'Sledeća asocijacija'}</button></div>`;
+  } else if (ans) {
+    const opts = [...Array(4).keys()].filter(c => game.cs[c] === '0');
+    if (target === null || (target !== 'F' && game.cs[target] === '1')) target = 'F';
+    h += `<div class="card"><b>Tvoj red – odgovori ili preskoči</b><div class="chips">${opts.map(c => `<button data-t="${c}" class="${target==c?'on':''}">${COLS[c]}</button>`).join('')}<button data-t="F" class="${target==='F'?'on':''}">Konačno</button></div>
+    <input id="ans" autocomplete="off" placeholder="Tvoj odgovor"><button data-a="answer">Odgovori</button><button class="sec" data-a="pass">Preskoči (potez dalje)</button></div>`;
+  } else if (open) h += '<div class="card"><b>Tvoj red – otvori jedno polje</b><p class="small">Dodirni polje na tabli, pa ćeš moći da odgovoriš.</p></div>';
+  else h += `<div class="card" style="text-align:center"><b>Na potezu: ${esc(cur ? cur.name : '')}</b></div>`;
+  return h + `<div class="card"><b>Poeni</b>${roster()}</div>`;
+}
+function done(){
+  const max = Math.max(...game.players.map(p => p.sc||0)), w = game.players.filter(p => (p.sc||0) === max);
+  return `<div class="card"><div class="win">${w.length > 1 ? '🤝 Nerešeno: ' : '🏆 Pobednik: '}${w.map(p => esc(p.name)).join(' i ')}</div><p class="small" style="text-align:center">${max} poena</p></div><div class="card"><b>Konačan rezultat</b>${roster()}</div><button data-a="leave">Nova igra</button>`;
+}
+boot();
+</script>
+</body>
+</html>
